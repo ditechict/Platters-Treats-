@@ -2,41 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* Sophisticated restaurant design system - Canapés and Treats Pretty Platters
+Elegant palette: Deep charcoal, warm ivory, champagne gold, soft pastels
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core neutrals - sophisticated base */
+    --background: 0 0% 98%;
+    --foreground: 210 15% 15%;
 
+    /* Card and surface elements */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 210 15% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 210 15% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Brand colors - deep charcoal primary */
+    --primary: 210 20% 12%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Warm ivory secondary */
+    --secondary: 45 25% 95%;
+    --secondary-foreground: 210 15% 15%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Subtle muted tones */
+    --muted: 45 15% 92%;
+    --muted-foreground: 210 10% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Champagne gold accent */
+    --accent: 42 78% 75%;
+    --accent-foreground: 210 20% 12%;
 
+    /* Destructive state */
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Subtle borders and inputs */
+    --border: 45 15% 88%;
+    --input: 45 15% 88%;
+    --ring: 42 78% 75%;
 
-    --radius: 0.5rem;
+    /* Soft pastels for accents */
+    --blush: 350 45% 90%;
+    --sage: 120 20% 88%;
+    --cream: 45 35% 96%;
+
+    /* Premium gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(210 20% 12%), hsl(210 25% 18%));
+    --gradient-gold: linear-gradient(135deg, hsl(42 78% 75%), hsl(42 68% 65%));
+    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(45 25% 98%));
+
+    /* Elegant shadows */
+    --shadow-soft: 0 4px 20px -2px hsl(210 20% 12% / 0.08);
+    --shadow-elegant: 0 8px 30px -4px hsl(210 20% 12% / 0.12);
+    --shadow-gold: 0 4px 20px -2px hsl(42 78% 75% / 0.15);
+
+    /* Smooth transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -101,5 +129,63 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  /* Restaurant-specific utility classes */
+  .hero-gradient {
+    background: var(--gradient-hero);
+  }
+  
+  .gold-gradient {
+    background: var(--gradient-gold);
+  }
+  
+  .subtle-gradient {
+    background: var(--gradient-subtle);
+  }
+  
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .shadow-elegant {
+    box-shadow: var(--shadow-elegant);
+  }
+  
+  .shadow-gold {
+    box-shadow: var(--shadow-gold);
+  }
+  
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+  
+  .transition-bounce {
+    transition: var(--transition-bounce);
+  }
+
+  /* Elegant hover effects */
+  .hover-lift {
+    @apply transition-smooth hover:shadow-elegant hover:-translate-y-1;
+  }
+  
+  .hover-gold {
+    @apply transition-smooth hover:shadow-gold;
+  }
+
+  /* Typography enhancements */
+  .heading-elegant {
+    @apply font-light tracking-wide;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+  
+  .text-gradient-gold {
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
