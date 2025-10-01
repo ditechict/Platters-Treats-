@@ -6,6 +6,30 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { toast } from 'sonner';
+import { z } from 'zod';
+
+const contactSchema = z.object({
+  name: z.string()
+    .trim()
+    .min(1, 'Name is required')
+    .max(100, 'Name must be less than 100 characters')
+    .regex(/^[a-zA-Z\s'-]+$/, 'Name can only contain letters, spaces, hyphens, and apostrophes'),
+  email: z.string()
+    .trim()
+    .min(1, 'Email is required')
+    .email('Invalid email address')
+    .max(255, 'Email must be less than 255 characters'),
+  phone: z.string()
+    .trim()
+    .max(20, 'Phone number must be less than 20 characters')
+    .regex(/^[0-9\s\-\+\(\)]*$/, 'Phone number can only contain numbers and basic formatting characters')
+    .optional()
+    .or(z.literal('')),
+  message: z.string()
+    .trim()
+    .min(10, 'Message must be at least 10 characters')
+    .max(1000, 'Message must be less than 1000 characters')
+});
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -15,15 +39,44 @@ const Contact = () => {
     message: ''
   });
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the form data to your backend
-    toast.success('Thank you for your message! We\'ll get back to you soon.');
-    setFormData({ name: '', email: '', phone: '', message: '' });
+    setErrors({});
+
+    try {
+      const validatedData = contactSchema.parse(formData);
+      
+      // Sanitize the data by trimming
+      const sanitizedData = {
+        name: validatedData.name.trim(),
+        email: validatedData.email.trim().toLowerCase(),
+        phone: validatedData.phone?.trim() || '',
+        message: validatedData.message.trim()
+      };
+
+      // Here you would typically send sanitizedData to your backend
+      console.log('Validated form data:', sanitizedData);
+      
+      toast.success('Thank you for your message! We\'ll get back to you soon.');
+      setFormData({ name: '', email: '', phone: '', message: '' });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const fieldErrors: Record<string, string> = {};
+        error.errors.forEach((err) => {
+          if (err.path[0]) {
+            fieldErrors[err.path[0].toString()] = err.message;
+          }
+        });
+        setErrors(fieldErrors);
+        toast.error('Please fix the errors in the form');
+      }
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -146,8 +199,16 @@ const Contact = () => {
                             required
                             value={formData.name}
                             onChange={handleChange}
-                            className="transition-smooth focus:shadow-gold"
+                            className={`transition-smooth focus:shadow-gold ${errors.name ? 'border-destructive' : ''}`}
+                            maxLength={100}
+                            aria-invalid={!!errors.name}
+                            aria-describedby={errors.name ? 'name-error' : undefined}
                           />
+                          {errors.name && (
+                            <p id="name-error" className="text-sm text-destructive mt-1">
+                              {errors.name}
+                            </p>
+                          )}
                         </div>
                         <div>
                           <label htmlFor="email" className="block text-sm font-medium text-primary mb-2">
@@ -160,8 +221,16 @@ const Contact = () => {
                             required
                             value={formData.email}
                             onChange={handleChange}
-                            className="transition-smooth focus:shadow-gold"
+                            className={`transition-smooth focus:shadow-gold ${errors.email ? 'border-destructive' : ''}`}
+                            maxLength={255}
+                            aria-invalid={!!errors.email}
+                            aria-describedby={errors.email ? 'email-error' : undefined}
                           />
+                          {errors.email && (
+                            <p id="email-error" className="text-sm text-destructive mt-1">
+                              {errors.email}
+                            </p>
+                          )}
                         </div>
                       </div>
                       
@@ -175,8 +244,16 @@ const Contact = () => {
                           type="tel"
                           value={formData.phone}
                           onChange={handleChange}
-                          className="transition-smooth focus:shadow-gold"
+                          className={`transition-smooth focus:shadow-gold ${errors.phone ? 'border-destructive' : ''}`}
+                          maxLength={20}
+                          aria-invalid={!!errors.phone}
+                          aria-describedby={errors.phone ? 'phone-error' : undefined}
                         />
+                        {errors.phone && (
+                          <p id="phone-error" className="text-sm text-destructive mt-1">
+                            {errors.phone}
+                          </p>
+                        )}
                       </div>
                       
                       <div>
@@ -190,9 +267,17 @@ const Contact = () => {
                           rows={5}
                           value={formData.message}
                           onChange={handleChange}
-                          className="transition-smooth focus:shadow-gold"
+                          className={`transition-smooth focus:shadow-gold ${errors.message ? 'border-destructive' : ''}`}
                           placeholder="Tell us about your event or dining preferences..."
+                          maxLength={1000}
+                          aria-invalid={!!errors.message}
+                          aria-describedby={errors.message ? 'message-error' : undefined}
                         />
+                        {errors.message && (
+                          <p id="message-error" className="text-sm text-destructive mt-1">
+                            {errors.message}
+                          </p>
+                        )}
                       </div>
                       
                       <Button 
