@@ -1,16 +1,16 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Minus } from 'lucide-react';
-import { useCart } from '@/hooks/useCart';
+import { Plus } from 'lucide-react';
+import { useCart } from '@/contexts/CartContext';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
 // Import menu item images
-import salmonCanape from '@/assets/salmon-canape.jpg';
-import truffleTartlets from '@/assets/truffle-tartlets.jpg';
-import prosciuttoAsparagus from '@/assets/prosciutto-asparagus.jpg';
-import chocolateTruffles from '@/assets/chocolate-truffles.jpg';
+import salmonBenedict from '@/assets/salmon-benedict.jpg';
+import breakfastPlatter from '@/assets/breakfast-platter.jpg';
+import demiledEggs from '@/assets/deviled-eggs.jpg';
+import gourmetBreakfast from '@/assets/gourmet-breakfast.jpg';
 
 interface MenuItem {
   id: string;
@@ -25,39 +25,39 @@ interface MenuItem {
 const menuItems: MenuItem[] = [
   {
     id: '1',
-    name: 'Smoked Salmon Canapés',
-    description: 'Premium Scottish salmon on artisanal crackers with cream cheese, dill, and micro greens',
-    price: 4.50,
-    image: salmonCanape,
+    name: 'Eggs Benedict with Smoked Salmon',
+    description: 'Poached eggs on toasted English muffin with smoked salmon, hollandaise sauce, and micro greens',
+    price: 12.50,
+    image: salmonBenedict,
     category: 'canapés',
     dietary: ['gluten-free option']
   },
   {
     id: '2',
-    name: 'Truffle Goat Cheese Tartlets',
-    description: 'Delicate pastry shells filled with creamy goat cheese and topped with truffle shavings',
-    price: 5.25,
-    image: truffleTartlets,
-    category: 'canapés',
-    dietary: ['vegetarian']
+    name: 'Gourmet Breakfast Platter',
+    description: 'Fresh seasonal fruit, artisanal pancakes, sausages, and berry compote with edible flowers',
+    price: 15.75,
+    image: breakfastPlatter,
+    category: 'platters',
+    dietary: ['vegetarian option']
   },
   {
     id: '3',
-    name: 'Prosciutto Asparagus',
-    description: 'Hand-wrapped asparagus spears with Italian prosciutto and hollandaise drizzle',
-    price: 4.75,
-    image: prosciuttoAsparagus,
+    name: 'Deviled Eggs Selection',
+    description: 'Classic deviled eggs with various gourmet toppings and garnishes',
+    price: 8.50,
+    image: demiledEggs,
     category: 'canapés',
-    dietary: ['gluten-free']
+    dietary: ['gluten-free', 'vegetarian']
   },
   {
     id: '4',
-    name: 'Artisanal Chocolate Truffles',
-    description: 'Hand-crafted truffles with gold leaf. Dark chocolate, white chocolate, and champagne varieties',
-    price: 6.50,
-    image: chocolateTruffles,
+    name: 'Artisan Brunch Bowl',
+    description: 'Fresh berries, granola, edible flowers with balsamic reduction and gourmet accompaniments',
+    price: 11.50,
+    image: gourmetBreakfast,
     category: 'treats',
-    dietary: ['vegetarian', 'gluten-free']
+    dietary: ['vegetarian', 'gluten-free option']
   }
 ];
 

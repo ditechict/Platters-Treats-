@@ -1,13 +1,18 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '@/components/Header';
 import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
-// Import existing images for gallery
-import heroImage from '@/assets/hero-canapes.jpg';
-import salmonCanape from '@/assets/salmon-canape.jpg';
-import truffleTartlets from '@/assets/truffle-tartlets.jpg';
-import prosciuttoAsparagus from '@/assets/prosciutto-asparagus.jpg';
-import chocolateTruffles from '@/assets/chocolate-truffles.jpg';
+// Import gallery images
+import platterMeats from '@/assets/platter-meats.jpg';
+import buffetDisplay from '@/assets/buffet-display.jpg';
+import elegantSpread from '@/assets/elegant-spread.jpg';
+import presentationDisplay from '@/assets/presentation-display.jpg';
+import demiledEggs from '@/assets/deviled-eggs.jpg';
+import salmonBenedict from '@/assets/salmon-benedict.jpg';
+import breakfastPlatter from '@/assets/breakfast-platter.jpg';
+import gourmetBreakfast from '@/assets/gourmet-breakfast.jpg';
 
 const Gallery = () => {
   useEffect(() => {
@@ -17,39 +22,51 @@ const Gallery = () => {
   const galleryImages = [
     {
       id: '1',
-      src: heroImage,
-      title: 'Elegant Canapé Selection',
-      description: 'Our signature platter arrangement'
+      src: platterMeats,
+      title: 'Premium Meat Platters',
+      description: 'Expertly grilled meats with fresh garnishes'
     },
     {
       id: '2',
-      src: salmonCanape,
-      title: 'Smoked Salmon Canapés',
-      description: 'Premium Scottish salmon presentation'
+      src: buffetDisplay,
+      title: 'Elegant Buffet Presentation',
+      description: 'Complete catering spread with ambient lighting'
     },
     {
       id: '3',
-      src: truffleTartlets,
-      title: 'Truffle Tartlets',
-      description: 'Artisanal goat cheese and truffle creation'
+      src: elegantSpread,
+      title: 'Artisanal Food Display',
+      description: 'Bespoke platters for special events'
     },
     {
       id: '4',
-      src: prosciuttoAsparagus,
-      title: 'Prosciutto Asparagus',
-      description: 'Italian-inspired elegant wraps'
+      src: presentationDisplay,
+      title: 'Signature Presentation',
+      description: 'Theatrical food displays with dry ice effect'
     },
     {
       id: '5',
-      src: chocolateTruffles,
-      title: 'Chocolate Truffles',
-      description: 'Hand-crafted luxury confections'
+      src: demiledEggs,
+      title: 'Gourmet Deviled Eggs',
+      description: 'Classic appetizers with modern twist'
     },
     {
       id: '6',
-      src: heroImage,
-      title: 'Event Catering',
-      description: 'Bespoke platter arrangements for special occasions'
+      src: salmonBenedict,
+      title: 'Eggs Benedict Selection',
+      description: 'Premium brunch offerings with smoked salmon'
+    },
+    {
+      id: '7',
+      src: breakfastPlatter,
+      title: 'Breakfast Platter',
+      description: 'Complete morning spread with fresh fruits'
+    },
+    {
+      id: '8',
+      src: gourmetBreakfast,
+      title: 'Artisan Brunch Bowls',
+      description: 'Beautifully plated gourmet breakfast selections'
     }
   ];
 
@@ -112,12 +129,12 @@ const Gallery = () => {
               Let us craft a bespoke catering experience that will leave your guests in awe
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-              <button className="bg-accent text-accent-foreground hover:bg-accent/90 px-8 py-3 rounded-lg font-medium transition-smooth shadow-gold">
-                Request Quote
-              </button>
-              <button className="border border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-3 rounded-lg font-medium transition-smooth">
-                View Menu
-              </button>
+              <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-gold">
+                <Link to="/contact">Request Quote</Link>
+              </Button>
+              <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+                <Link to="/menu">View Menu</Link>
+              </Button>
             </div>
           </div>
         </section>
