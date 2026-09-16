@@ -1,4 +1,6 @@
-import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
+
+const STORAGE_KEY = 'cnt-basket-v1';
 
 export interface CartItem {
   id: string;
