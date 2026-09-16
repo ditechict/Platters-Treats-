@@ -284,9 +284,10 @@ const Contact = () => {
                       
                       <Button 
                         type="submit" 
+                        disabled={submitting}
                         className="w-full bg-accent text-accent-foreground hover:bg-accent/90 shadow-gold font-medium py-3"
                       >
-                        Send Message
+                        {submitting ? 'Sending…' : 'Send Message'}
                       </Button>
                     </form>
                   </CardContent>
@@ -296,6 +297,7 @@ const Contact = () => {
           </div>
         </section>
       </main>
+      <Footer />
     </div>
   );
 };
