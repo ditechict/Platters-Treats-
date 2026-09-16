@@ -1,4 +1,5 @@
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import MenuSection from '@/components/MenuSection';
 import { useEffect } from 'react';
 
