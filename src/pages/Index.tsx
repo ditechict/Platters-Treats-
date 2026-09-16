@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
+import Footer from '@/components/Footer';
 import MenuSection from '@/components/MenuSection';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -86,47 +87,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-primary text-primary-foreground py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <div className="text-2xl font-elegant font-bold mb-2">
-                Canapés & Treats
-              </div>
-              <div className="text-sm font-light text-primary-foreground/80 mb-4">
-                Pretty Platters
-              </div>
-              <p className="text-sm text-primary-foreground/70 leading-relaxed">
-                Sophisticated dining with international flair in the heart of London.
-              </p>
-            </div>
-            
-            <div>
-              <h3 className="font-medium mb-4">Contact</h3>
-              <div className="space-y-2 text-sm text-primary-foreground/70">
-                <p>123 Elegant Street, Mayfair</p>
-                <p>London W1K 5NA</p>
-                <p>+44 20 7123 4567</p>
-                <p>hello@canapesandtreats.co.uk</p>
-              </div>
-            </div>
-            
-            <div>
-              <h3 className="font-medium mb-4">Opening Hours</h3>
-              <div className="space-y-2 text-sm text-primary-foreground/70">
-                <p>Monday - Thursday: 12:00 - 22:00</p>
-                <p>Friday - Saturday: 12:00 - 23:00</p>
-                <p>Sunday: 12:00 - 21:00</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="border-t border-primary-foreground/20 mt-8 pt-8 text-center text-sm text-primary-foreground/50">
-            <p>&copy; 2024 Canapés & Treats Pretty Platters. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

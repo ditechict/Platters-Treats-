@@ -62,7 +62,7 @@ const menuItems: MenuItem[] = [
 ];
 
 const MenuSection = () => {
-  const { addToCart } = useCart();
+  const { addToCart, openCart } = useCart();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   
   const categories = [
@@ -84,7 +84,8 @@ const MenuSection = () => {
       image: item.image,
       description: item.description
     });
-    toast.success(`${item.name} added to cart`);
+    toast.success(`${item.name} added to basket`);
+    openCart();
   };
 
   return (
