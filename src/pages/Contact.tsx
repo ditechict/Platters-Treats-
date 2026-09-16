@@ -7,6 +7,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { toast } from 'sonner';
 import { z } from 'zod';
+import { supabase } from '@/integrations/supabase/client';
+import Footer from '@/components/Footer';
 
 const contactSchema = z.object({
   name: z.string()
@@ -40,43 +42,43 @@ const Contact = () => {
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
 
-    try {
-      const validatedData = contactSchema.parse(formData);
-      
-      // Sanitize the data by trimming
-      const sanitizedData = {
-        name: validatedData.name.trim(),
-        email: validatedData.email.trim().toLowerCase(),
-        phone: validatedData.phone?.trim() || '',
-        message: validatedData.message.trim()
-      };
-
-      // Here you would typically send sanitizedData to your backend
-      console.log('Validated form data:', sanitizedData);
-      
-      toast.success('Thank you for your message! We\'ll get back to you soon.');
-      setFormData({ name: '', email: '', phone: '', message: '' });
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        const fieldErrors: Record<string, string> = {};
-        error.errors.forEach((err) => {
-          if (err.path[0]) {
-            fieldErrors[err.path[0].toString()] = err.message;
-          }
-        });
-        setErrors(fieldErrors);
-        toast.error('Please fix the errors in the form');
-      }
+    const result = contactSchema.safeParse(formData);
+    if (!result.success) {
+      const fieldErrors: Record<string, string> = {};
+      result.error.errors.forEach((err) => {
+        if (err.path[0]) fieldErrors[err.path[0].toString()] = err.message;
+      });
+      setErrors(fieldErrors);
+      toast.error('Please fix the errors in the form');
+      return;
     }
+
+    setSubmitting(true);
+    const { error } = await supabase.from('enquiries').insert({
+      name: result.data.name.trim(),
+      email: result.data.email.trim().toLowerCase(),
+      phone: result.data.phone?.trim() || null,
+      message: result.data.message.trim(),
+    });
+    setSubmitting(false);
+
+    if (error) {
+      toast.error("We couldn't send your message. Please try again or call us.");
+      return;
+    }
+
+    toast.success("Thank you for your message! We'll get back to you soon.");
+    setFormData({ name: '', email: '', phone: '', message: '' });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -282,9 +284,10 @@ const Contact = () => {
                       
                       <Button 
                         type="submit" 
+                        disabled={submitting}
                         className="w-full bg-accent text-accent-foreground hover:bg-accent/90 shadow-gold font-medium py-3"
                       >
-                        Send Message
+                        {submitting ? 'Sending…' : 'Send Message'}
                       </Button>
                     </form>
                   </CardContent>
@@ -294,6 +297,7 @@ const Contact = () => {
           </div>
         </section>
       </main>
+      <Footer />
     </div>
   );
 };
