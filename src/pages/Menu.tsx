@@ -24,6 +24,7 @@ const Menu = () => {
         </div>
         <MenuSection />
       </main>
+      <Footer />
     </div>
   );
 };
