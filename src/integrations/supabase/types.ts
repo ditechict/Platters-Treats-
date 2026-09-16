@@ -363,7 +363,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      place_order: {
+        Args: {
+          _customer_email: string
+          _customer_name: string
+          _customer_phone?: string
+          _delivery_notes?: string
+          _event_date?: string
+          _items: Json
+        }
+        Returns: string
+      }
     }
     Enums: {
       app_role: "admin" | "staff" | "customer"
