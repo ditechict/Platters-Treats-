@@ -114,6 +114,7 @@ export type Database = {
           display_order: number
           id: string
           image_url: string
+          is_published: boolean
           title: string | null
           updated_at: string
         }
@@ -123,6 +124,7 @@ export type Database = {
           display_order?: number
           id?: string
           image_url: string
+          is_published?: boolean
           title?: string | null
           updated_at?: string
         }
@@ -132,6 +134,7 @@ export type Database = {
           display_order?: number
           id?: string
           image_url?: string
+          is_published?: boolean
           title?: string | null
           updated_at?: string
         }
@@ -143,6 +146,7 @@ export type Database = {
           description: string | null
           display_order: number
           id: string
+          is_published: boolean
           name: string
           slug: string
           updated_at: string
@@ -152,6 +156,7 @@ export type Database = {
           description?: string | null
           display_order?: number
           id?: string
+          is_published?: boolean
           name: string
           slug: string
           updated_at?: string
@@ -161,6 +166,7 @@ export type Database = {
           description?: string | null
           display_order?: number
           id?: string
+          is_published?: boolean
           name?: string
           slug?: string
           updated_at?: string
