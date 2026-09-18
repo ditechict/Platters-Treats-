@@ -7,14 +7,14 @@ import breakfastHero from '@/assets/breakfast-platter-hero.jpeg.asset.json';
 
 const slides = [
   {
-    src: heroImage,
-    alt: 'Elegant canapés and artful platters',
-    position: 'object-center',
-  },
-  {
     src: breakfastHero.url,
     alt: 'An abundant breakfast platter with pastries, fruit and savoury dishes',
     position: 'object-[center_58%] md:object-center',
+  },
+  {
+    src: heroImage,
+    alt: 'Elegant canapés and artful platters',
+    position: 'object-center',
   },
 ];
 
@@ -27,7 +27,7 @@ const Hero = () => {
 
     const interval = window.setInterval(() => {
       setActiveSlide((current) => (current + 1) % slides.length);
-    }, 7000);
+    }, 7150);
 
     return () => window.clearInterval(interval);
   }, [isPaused]);
@@ -62,6 +62,7 @@ const Hero = () => {
           />
         ))}
         <div className="absolute inset-0 hero-gradient opacity-60"></div>
+        <div key={activeSlide} className="hero-light-sweep" aria-hidden="true" />
       </div>
 
       {/* Content */}
