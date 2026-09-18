@@ -1,18 +1,66 @@
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Star } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import heroImage from '@/assets/hero-canapes.jpg';
+import breakfastHero from '@/assets/breakfast-platter-hero.jpeg.asset.json';
+
+const slides = [
+  {
+    src: heroImage,
+    alt: 'Elegant canapés and artful platters',
+    position: 'object-center',
+  },
+  {
+    src: breakfastHero.url,
+    alt: 'An abundant breakfast platter with pastries, fruit and savoury dishes',
+    position: 'object-[center_58%] md:object-center',
+  },
+];
 
 const Hero = () => {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    if (isPaused) return;
+
+    const interval = window.setInterval(() => {
+      setActiveSlide((current) => (current + 1) % slides.length);
+    }, 7000);
+
+    return () => window.clearInterval(interval);
+  }, [isPaused]);
+
+  const showSlide = (index: number) => setActiveSlide(index);
+  const showPrevious = () => setActiveSlide((current) => (current - 1 + slides.length) % slides.length);
+  const showNext = () => setActiveSlide((current) => (current + 1) % slides.length);
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      aria-roledescription="carousel"
+      aria-label="Featured dining photography"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onFocusCapture={() => setIsPaused(true)}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setIsPaused(false);
+      }}
+    >
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <img
-          src={heroImage}
-          alt="Elegant canapés and artful platters"
-          className="w-full h-full object-cover"
-        />
+        {slides.map((slide, index) => (
+          <img
+            key={slide.src}
+            src={slide.src}
+            alt={slide.alt}
+            aria-hidden={index !== activeSlide}
+            className={`hero-slide absolute inset-0 h-full w-full object-cover ${slide.position} ${
+              index === activeSlide ? 'hero-slide-active' : 'hero-slide-inactive'
+            }`}
+          />
+        ))}
         <div className="absolute inset-0 hero-gradient opacity-60"></div>
       </div>
 
@@ -71,6 +119,50 @@ const Hero = () => {
             <div className="text-sm font-light opacity-80">Customer Rating</div>
           </div>
         </div>
+      </div>
+
+      <div className="absolute inset-x-4 top-1/2 z-20 flex -translate-y-1/2 justify-between md:inset-x-8">
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={showPrevious}
+          aria-label="Show previous banner image"
+          className="h-10 w-10 border border-primary-foreground/25 text-primary-foreground backdrop-blur-sm hover:bg-primary-foreground/10 hover:text-primary-foreground"
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </Button>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={showNext}
+          aria-label="Show next banner image"
+          className="h-10 w-10 border border-primary-foreground/25 text-primary-foreground backdrop-blur-sm hover:bg-primary-foreground/10 hover:text-primary-foreground"
+        >
+          <ChevronRight className="h-5 w-5" />
+        </Button>
+      </div>
+
+      <div className="absolute bottom-24 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3" aria-label="Choose banner image">
+        {slides.map((slide, index) => (
+          <Button
+            key={slide.src}
+            type="button"
+            variant="ghost"
+            size="icon"
+            onClick={() => showSlide(index)}
+            aria-label={`Show banner image ${index + 1}`}
+            aria-current={index === activeSlide ? 'true' : undefined}
+            className="group h-6 w-8 p-0 hover:bg-transparent"
+          >
+            <span
+              className={`block h-px transition-all duration-700 ${
+                index === activeSlide ? 'w-8 bg-accent' : 'w-4 bg-primary-foreground/45 group-hover:w-6'
+              }`}
+            />
+          </Button>
+        ))}
       </div>
 
       {/* Scroll indicator — restrained pulse, no bounce */}

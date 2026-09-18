@@ -163,6 +163,29 @@
     font-feature-settings: "kern" 1, "liga" 1;
   }
 
+  /* Hero photography — a slow editorial dissolve rather than a lateral slide */
+  .hero-slide {
+    filter: blur(1.5px);
+    transform: scale(1.035);
+    transition:
+      opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1),
+      filter 1.4s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 7s cubic-bezier(0.2, 0.6, 0.3, 1);
+    will-change: opacity, filter, transform;
+  }
+
+  .hero-slide-active {
+    opacity: 1;
+    filter: blur(1px);
+    transform: scale(1.075);
+  }
+
+  .hero-slide-inactive {
+    opacity: 0;
+    filter: blur(4px);
+    transform: scale(1.035);
+  }
+
   .text-gradient-gold {
     background: var(--gradient-gold);
     -webkit-background-clip: text;
@@ -208,6 +231,11 @@
 
     html {
       scroll-behavior: auto;
+    }
+
+    .hero-slide {
+      transform: scale(1.035);
+      transition: opacity 0.35s ease;
     }
   }
 
