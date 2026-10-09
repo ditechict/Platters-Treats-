@@ -343,6 +343,30 @@ export type Database = {
         }
         Relationships: []
       }
+      quote_settings: {
+        Row: {
+          event_styles: Json
+          id: number
+          min_spend: number
+          service_levels: Json
+          updated_at: string
+        }
+        Insert: {
+          event_styles?: Json
+          id?: number
+          min_spend?: number
+          service_levels?: Json
+          updated_at?: string
+        }
+        Update: {
+          event_styles?: Json
+          id?: number
+          min_spend?: number
+          service_levels?: Json
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
