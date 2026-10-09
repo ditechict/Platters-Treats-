@@ -9,6 +9,8 @@ Approved plan: `.lovable/plan/` (agency-grade rebuild). Work in this order.
 - [ ] 3. Rebuild pages against real data: Home (story-led), Our Story, Events, Menu, Gallery, Contact
 - [ ] 4. Basket persistence, checkout with card payment, order confirmation, account area
 - [ ] 5. Admin dashboard (menu, gallery, orders, enquiries, bookings)
+- [x] Quote pricing editable in admin
+- [ ] Customer quote confirmation email — blocked: needs a verified email domain
 - [ ] 6. SEO pass (per-page meta, JSON-LD, sitemap), performance pass, full click-through test
 
 ## Notes

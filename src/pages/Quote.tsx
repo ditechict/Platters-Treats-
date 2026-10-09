@@ -10,23 +10,10 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
-
-const EVENT_STYLES = [
-  { id: 'canape-reception', label: 'Canapé Reception', perPerson: 18, description: 'Elegant finger food for standing receptions' },
-  { id: 'grazing-platters', label: 'Grazing Platters', perPerson: 14, description: 'Abundant shared platters and boards' },
-  { id: 'afternoon-tea', label: 'Afternoon Tea', perPerson: 22, description: 'Tiered stands, scones and patisserie' },
-  { id: 'full-banquet', label: 'Full Banquet', perPerson: 32, description: 'Multi-course seated dining experience' },
-] as const;
-
-const SERVICE_LEVELS = [
-  { id: 'delivery-only', label: 'Delivery Only', multiplier: 1, description: 'Beautifully presented, delivered to your door' },
-  { id: 'setup-styling', label: 'Delivery & Styling', multiplier: 1.15, description: 'We deliver and style the display for you' },
-  { id: 'staffed-service', label: 'Fully Staffed', multiplier: 1.35, description: 'Professional staff serve your guests throughout' },
-] as const;
+import { useQuoteSettings, computeEstimate, DEFAULT_QUOTE_SETTINGS } from '@/hooks/useQuoteSettings';
 
 const MIN_GUESTS = 10;
 const MAX_GUESTS = 500;
-const MIN_SPEND = 250;
 
 const bookingSchema = z.object({
   name: z.string().trim().min(1, 'Name is required').max(120),
@@ -40,6 +27,9 @@ const formatGBP = (value: number) =>
   new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 0 }).format(value);
 
 const Quote = () => {
+  const { data: settings = DEFAULT_QUOTE_SETTINGS } = useQuoteSettings();
+  const EVENT_STYLES = settings.eventStyles;
+  const SERVICE_LEVELS = settings.serviceLevels;
   const [guests, setGuests] = useState(50);
   const [styleId, setStyleId] = useState<string>(EVENT_STYLES[0].id);
   const [serviceId, setServiceId] = useState<string>(SERVICE_LEVELS[0].id);
@@ -51,13 +41,13 @@ const Quote = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const style = EVENT_STYLES.find((s) => s.id === styleId)!;
-  const service = SERVICE_LEVELS.find((s) => s.id === serviceId)!;
+  const style = EVENT_STYLES.find((s) => s.id === styleId) ?? EVENT_STYLES[0];
+  const service = SERVICE_LEVELS.find((s) => s.id === serviceId) ?? SERVICE_LEVELS[0];
 
-  const estimate = useMemo(() => {
-    const raw = guests * style.perPerson * service.multiplier;
-    return Math.max(Math.round(raw), MIN_SPEND);
-  }, [guests, style, service]);
+  const estimate = useMemo(
+    () => computeEstimate(guests, style.perPerson, service.multiplier, settings.minSpend),
+    [guests, style, service, settings.minSpend]
+  );
 
   const perPerson = guests > 0 ? estimate / guests : 0;
 

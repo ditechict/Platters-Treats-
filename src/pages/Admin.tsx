@@ -9,6 +9,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import QuoteSettingsEditor from '@/components/admin/QuoteSettingsEditor';
 
 const useTable = (table: string, enabled: boolean) =>
   useQuery({
@@ -81,7 +82,12 @@ const Admin = () => {
               <TabsTrigger value="orders">Orders</TabsTrigger>
               <TabsTrigger value="enquiries">Enquiries</TabsTrigger>
               <TabsTrigger value="bookings">Bookings</TabsTrigger>
+              <TabsTrigger value="pricing">Quote pricing</TabsTrigger>
             </TabsList>
+
+            <TabsContent value="pricing" className="mt-6">
+              <QuoteSettingsEditor />
+            </TabsContent>
 
             <TabsContent value="orders" className="mt-6">
               {renderList(orders, (row) => (
