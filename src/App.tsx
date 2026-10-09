@@ -11,6 +11,7 @@ import Index from "./pages/Index";
 import Menu from "./pages/Menu";
 import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
+import Quote from "./pages/Quote";
 import Cart from "./pages/Cart";
 import Auth from "./pages/Auth";
 import Account from "./pages/Account";
@@ -34,6 +35,7 @@ const App = () => (
                 <Route path="/menu" element={<Menu />} />
                 <Route path="/gallery" element={<Gallery />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/quote" element={<Quote />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/account" element={<Account />} />
