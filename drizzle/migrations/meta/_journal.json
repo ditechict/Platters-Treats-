@@ -15,6 +15,13 @@
       "when": 1791513910214,
       "tag": "0001_quote_settings",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791645023521,
+      "tag": "0002_scope_quote_settings_read",
+      "breakpoints": true
     }
   ]
 }
