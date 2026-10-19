@@ -124,12 +124,17 @@ const Admin = () => {
                 <>
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium text-primary">{row.name}</span>
-                    <Badge variant="secondary">{row.status ?? 'new'}</Badge>
+                    <div className="flex flex-wrap justify-end gap-2">
+                      {row.has_tasting_requested && <Badge className="bg-accent text-accent-foreground">Tasting Requested</Badge>}
+                      <Badge variant="secondary">{row.status ?? 'new'}</Badge>
+                    </div>
                   </div>
                   <p className="text-sm text-muted-foreground">
                     {row.event_type} · {row.guest_count ? `${row.guest_count} guests` : ''}
                   </p>
                   <p className="text-sm">{row.email}</p>
+                  {row.notes && <p className="text-sm text-muted-foreground mt-3 whitespace-pre-line">{row.notes}</p>}
+                  {row.has_tasting_requested && row.tasting_notes && <p className="text-sm mt-3"><span className="font-medium text-primary">Tasting preferences: </span>{row.tasting_notes}</p>}
                 </>
               ))}
             </TabsContent>
