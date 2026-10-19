@@ -17,8 +17,8 @@ const MenuSection = () => {
   const { data: items = [], isLoading: loadingItems, isError } = useMenuItems();
 
   const filteredItems = useMemo(() => {
-    if (selectedCategory === 'all') return items;
-    return items.filter((item) => item.category_id === selectedCategory);
+    const collection = selectedCategory === 'all' ? items : items.filter((item) => item.category_id === selectedCategory);
+    return [...collection].sort((a, b) => Number(b.is_featured) - Number(a.is_featured));
   }, [items, selectedCategory]);
 
   const isLoading = loadingCategories || loadingItems;
@@ -84,6 +84,7 @@ const MenuSection = () => {
 
                 <CardContent className="p-6">
                   <div className="flex flex-wrap gap-2 mb-3">
+                    {item.is_featured && <Badge className="bg-accent text-accent-foreground">Featured</Badge>}
                     {item.dietary_tags?.map((diet) => (
                       <Badge key={diet} variant="secondary" className="text-xs">
                         {diet}

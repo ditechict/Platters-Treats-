@@ -2,6 +2,7 @@ import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
 import MenuSection from '@/components/MenuSection';
+import GuestSpotlightCarousel from '@/components/GuestSpotlightCarousel';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -64,6 +65,7 @@ const Index = () => {
       </section>
 
       {/* Featured Menu Section */}
+      <GuestSpotlightCarousel />
       <MenuSection />
 
       {/* Call to Action */}

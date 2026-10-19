@@ -11,6 +11,9 @@ import { z } from 'zod';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import { useQuoteSettings, computeEstimate, DEFAULT_QUOTE_SETTINGS } from '@/hooks/useQuoteSettings';
+import { Switch } from '@/components/ui/switch';
+import { computeTastingFee, TASTING_FEE } from '@/lib/tasting';
+import { GUEST_MOMENTS } from '@/lib/images';
 
 const MIN_GUESTS = 10;
 const MAX_GUESTS = 500;
@@ -21,6 +24,7 @@ const bookingSchema = z.object({
   phone: z.string().trim().max(40).regex(/^[0-9\s\-+()]*$/, 'Phone can only contain numbers and basic formatting').optional().or(z.literal('')),
   eventDate: z.string().optional().or(z.literal('')),
   notes: z.string().trim().max(4000).optional().or(z.literal('')),
+  tastingNotes: z.string().trim().max(2000).optional().or(z.literal('')),
 });
 
 const formatGBP = (value: number) =>
@@ -33,7 +37,8 @@ const Quote = () => {
   const [guests, setGuests] = useState(50);
   const [styleId, setStyleId] = useState<string>(EVENT_STYLES[0].id);
   const [serviceId, setServiceId] = useState<string>(SERVICE_LEVELS[0].id);
-  const [form, setForm] = useState({ name: '', email: '', phone: '', eventDate: '', notes: '' });
+  const [form, setForm] = useState({ name: '', email: '', phone: '', eventDate: '', notes: '', tastingNotes: '' });
+  const [hasTasting, setHasTasting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
 
@@ -49,6 +54,8 @@ const Quote = () => {
     [guests, style, service, settings.minSpend]
   );
 
+  const tastingFee = computeTastingFee(hasTasting, estimate, guests);
+  const totalEstimate = estimate + tastingFee;
   const perPerson = guests > 0 ? estimate / guests : 0;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -67,7 +74,9 @@ const Quote = () => {
     }
 
     const summary = [
-      `Quote estimate: ${formatGBP(estimate)} (${guests} guests, ${style.label}, ${service.label})`,
+       `Event estimate: ${formatGBP(estimate)} (${guests} guests, ${style.label}, ${service.label})`,
+       hasTasting ? `Private Tasting & Menu Consultation: ${tastingFee === 0 ? 'Complimentary' : formatGBP(tastingFee)}` : null,
+       `Total estimate: ${formatGBP(totalEstimate)}`,
       form.notes.trim() ? `Notes: ${form.notes.trim()}` : null,
     ].filter(Boolean).join('\n');
 
@@ -81,6 +90,8 @@ const Quote = () => {
       guest_count: guests,
       package_name: service.label,
       notes: summary,
+       has_tasting_requested: hasTasting,
+       tasting_notes: hasTasting ? result.data.tastingNotes?.trim() || null : null,
     });
     setSubmitting(false);
 
@@ -90,7 +101,8 @@ const Quote = () => {
     }
 
     toast.success("Thank you! Your booking request has been sent — we'll confirm your quote shortly.");
-    setForm({ name: '', email: '', phone: '', eventDate: '', notes: '' });
+     setForm({ name: '', email: '', phone: '', eventDate: '', notes: '', tastingNotes: '' });
+     setHasTasting(false);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -204,6 +216,25 @@ const Quote = () => {
                     </div>
                   </CardContent>
                 </Card>
+                <div className="border-t border-border pt-8">
+                  <img src={GUEST_MOMENTS[0].src} alt={GUEST_MOMENTS[0].alt} loading="lazy" className="w-full aspect-[16/9] object-cover object-[center_45%] mb-6" />
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <h2 className="font-display text-3xl text-primary mb-2">Private Tasting &amp; Menu Consultation</h2>
+                      <p className="text-sm text-muted-foreground">£85 flat fee · Complimentary on event quotes over £1,000 or for 40+ guests.</p>
+                    </div>
+                    <Switch id="q-tasting" checked={hasTasting} onCheckedChange={setHasTasting} aria-label="Add Private Tasting Session" />
+                  </div>
+                  <label htmlFor="q-tasting" className="block text-sm text-primary mt-4">Add Private Tasting Session</label>
+                  {hasTasting && (
+                    <div className="mt-4 space-y-3">
+                      <p className="text-accent font-medium" aria-live="polite">{tastingFee === 0 ? 'Complimentary tasting included' : `${formatGBP(TASTING_FEE)} tasting added`}</p>
+                      <label htmlFor="q-tasting-notes" className="block text-sm text-primary">Tasting preferences</label>
+                      <Textarea id="q-tasting-notes" name="tastingNotes" value={form.tastingNotes} onChange={handleChange} maxLength={2000} rows={3} placeholder="Dishes to try, dietary requirements, preferred timing…" aria-invalid={!!errors.tastingNotes} />
+                      {errors.tastingNotes && <p className="text-sm text-destructive">{errors.tastingNotes}</p>}
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Estimate + booking form */}
@@ -212,12 +243,13 @@ const Quote = () => {
                   <CardContent className="p-8 text-center">
                     <p className="text-sm uppercase tracking-[0.25em] opacity-70 mb-2">Your Estimate</p>
                     <p className="font-display text-5xl md:text-6xl heading-elegant text-accent" aria-live="polite">
-                      {formatGBP(estimate)}
+                       {formatGBP(totalEstimate)}
                     </p>
                     <p className="text-sm opacity-80 mt-3">
                       {guests} guests · {style.label} · {service.label}
                     </p>
                     <p className="text-xs opacity-60 mt-1">≈ {formatGBP(perPerson)} per guest</p>
+                     {hasTasting && <p className="text-sm text-accent mt-3">Event {formatGBP(estimate)} · Tasting {tastingFee === 0 ? 'complimentary' : formatGBP(tastingFee)}</p>}
                     <p className="text-xs opacity-60 mt-4">
                       Indicative estimate only — your final quote is confirmed after we review your request.
                     </p>
@@ -289,7 +321,7 @@ const Quote = () => {
                         disabled={submitting}
                         className="w-full bg-accent text-accent-foreground hover:bg-accent/90 shadow-gold font-medium py-3"
                       >
-                        {submitting ? 'Sending…' : `Request Quote — ${formatGBP(estimate)}`}
+                         {submitting ? 'Sending…' : `Request Quote — ${formatGBP(totalEstimate)}`}
                       </Button>
                     </form>
                   </CardContent>

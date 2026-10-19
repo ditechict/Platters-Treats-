@@ -5,12 +5,13 @@ import Footer from '@/components/Footer';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { useGalleryImages } from '@/hooks/useContent';
+import { guestMomentForRef } from '@/lib/images';
 
 const Gallery = () => {
   const [filter, setFilter] = useState('all');
-  const [lightbox, setLightbox] = useState<{ src: string; title: string } | null>(null);
+  const [lightbox, setLightbox] = useState<{ src: string; title: string; caption: string; alt: string } | null>(null);
   const { data: images = [], isLoading, isError } = useGalleryImages();
 
   useEffect(() => {
@@ -70,19 +71,23 @@ const Gallery = () => {
                 visible.map((image) => (
                   <Card key={image.id} className="hover-lift border-0 shadow-soft overflow-hidden">
                     <CardContent className="p-0">
-                      <button
+                      <Button
                         type="button"
-                        className="block w-full aspect-square overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                        onClick={() => setLightbox({ src: image.src, title: image.title ?? 'Gallery image' })}
+                        variant="ghost"
+                        className="block w-full h-auto rounded-none p-0 aspect-square overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                        onClick={() => {
+                          const moment = guestMomentForRef(image.image_url);
+                          setLightbox({ src: moment?.fullSrc ?? image.src, title: image.title ?? 'Gallery image', caption: moment?.caption ?? image.category ?? '', alt: moment?.alt ?? image.title ?? 'Gallery image' });
+                        }}
                         aria-label={`View ${image.title ?? 'gallery image'} larger`}
                       >
                         <img
-                          src={image.src}
-                          alt={image.title ?? 'Canapés and Treats presentation'}
+                          src={guestMomentForRef(image.image_url)?.src ?? image.src}
+                          alt={guestMomentForRef(image.image_url)?.alt ?? image.title ?? 'Canapés and Treats presentation'}
                           loading="lazy"
                           className="w-full h-full object-cover transition-smooth hover:scale-105"
                         />
-                      </button>
+                      </Button>
                       <div className="p-6">
                         <h2 className="text-lg font-medium text-primary mb-1">{image.title}</h2>
                         <p className="text-sm text-muted-foreground">{image.category}</p>
@@ -116,9 +121,13 @@ const Gallery = () => {
       <Footer />
 
       <Dialog open={!!lightbox} onOpenChange={(open) => !open && setLightbox(null)}>
-        <DialogContent className="max-w-4xl p-0 overflow-hidden bg-transparent border-0">
+        <DialogContent className="max-w-4xl w-[calc(100%-2rem)] max-h-[95dvh] p-5 overflow-y-auto bg-background border-0">
           {lightbox && (
-            <img src={lightbox.src} alt={lightbox.title} className="w-full h-auto rounded-lg" />
+            <>
+              <DialogTitle className="font-display text-2xl text-primary pr-8">{lightbox.title}</DialogTitle>
+              <img src={lightbox.src} alt={lightbox.alt} className="w-full h-auto max-h-[70dvh] object-contain" />
+              <DialogDescription>{lightbox.caption}</DialogDescription>
+            </>
           )}
         </DialogContent>
       </Dialog>
