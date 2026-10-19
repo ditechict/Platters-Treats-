@@ -4,6 +4,12 @@ Approved plan: `.lovable/plan/` (agency-grade rebuild). Work in this order.
 
 ## Tasks
 
+- [ ] Guest rollout: upload supplied cropped photos and add Guest Moments gallery collection
+- [ ] Guest rollout: homepage touch/drag editorial carousel between About and Featured Menu
+- [ ] Guest rollout: tasting pricing, booking selection/notes, admin indicator and rule tests
+- [ ] Guest rollout: featured brunch, skillet and cooler glass/carafe menu items
+- [ ] Guest rollout: verify gallery, carousel, basket and persisted tasting booking
+
 - [ ] 1. Design system + layout shell — brand tokens (ink/ivory/champagne gold), Cormorant Garamond display + Jost body, scroll-aware header, basket drawer, footer, section kit, reveal-on-scroll motion
 - [ ] 2. Database schema, roles, storage, auth (menu items, categories, gallery, orders, enquiries, bookings, profiles, user_roles — all with RLS)
 - [ ] 3. Rebuild pages against real data: Home (story-led), Our Story, Events, Menu, Gallery, Contact
