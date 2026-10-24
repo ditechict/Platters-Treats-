@@ -6,13 +6,17 @@ import GuestSpotlightCarousel from '@/components/GuestSpotlightCarousel';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { Star, Users, Award, Clock } from 'lucide-react';
+import { Star, Users, Clock } from 'lucide-react';
 
 const Index = () => {
   return (
     <div className="min-h-screen">
       <Header />
       <Hero />
+
+      {/* Featured Menu Section */}
+      <MenuSection />
+
       
       {/* About Section */}
       <section className="py-20 bg-card">
