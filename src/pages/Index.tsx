@@ -32,15 +32,7 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Card className="text-center border-0 shadow-soft hover-lift">
-              <CardContent className="p-8">
-                <Award className="h-12 w-12 text-accent mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-primary mb-2">Award Winning</h3>
-                <p className="text-sm text-muted-foreground">Recognized for culinary excellence</p>
-              </CardContent>
-            </Card>
-
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <Card className="text-center border-0 shadow-soft hover-lift">
               <CardContent className="p-8">
                 <Users className="h-12 w-12 text-accent mx-auto mb-4" />
@@ -68,9 +60,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Featured Menu Section */}
+      {/* Guest spotlight */}
       <GuestSpotlightCarousel />
-      <MenuSection />
 
       {/* Call to Action */}
       <section className="py-20 hero-gradient text-primary-foreground">
