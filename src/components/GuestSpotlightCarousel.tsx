@@ -33,7 +33,7 @@ export default function GuestSpotlightCarousel() {
         <div ref={viewport} className="overflow-hidden" aria-roledescription="carousel">
           <div className="flex touch-pan-y -ml-6">
             {GUEST_MOMENTS.map((moment, index) => (
-              <article key={moment.key} className="group min-w-0 flex-[0_0_86%] sm:flex-[0_0_48%] lg:flex-[0_0_32%] pl-6" aria-label={`${index + 1} of ${GUEST_MOMENTS.length}`} aria-roledescription="slide">
+              <article key={moment.key} className="group min-w-0 flex-[0_0_86%] sm:flex-[0_0_48%] pl-6" aria-label={`${index + 1} of ${GUEST_MOMENTS.length}`} aria-roledescription="slide">
                 <div className="aspect-[4/5] overflow-hidden bg-muted">
                   <img src={moment.src} alt={moment.alt} loading="lazy" width={499} height={830} draggable={false} className="h-full w-full object-cover motion-safe:transition-transform motion-safe:duration-700 group-hover:scale-[1.025]" />
                 </div>

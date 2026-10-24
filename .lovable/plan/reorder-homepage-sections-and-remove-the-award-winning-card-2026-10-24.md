@@ -13,8 +13,8 @@ Header → Hero → Menu ("The Collection — Our Menu") → About (3 cards) →
 ## Changes
 
 1. **Move the menu section up.** In `src/pages/Index.tsx`, move `<MenuSection />` so it renders immediately after `<Hero />`, before the About section. No changes to `MenuSection.tsx` itself — the "The Collection / Our Menu" heading, category filters, and add-to-basket cards stay exactly as they are.
+2. **Remove the "Award Winning" card.** Delete the entire Award Winning `Card` (Award icon, "Recognized for culinary excellence") from the About section, leaving the three remaining cards: Private Events, Premium Quality, Fresh Daily. The 4-column grid already collapses gracefully at 3 items (3 cards fit evenly on the large-screen row). Also reduce the visible Guest Spotlight carousel on the homepage.  
 
-2. **Remove the "Award Winning" card.** Delete the entire Award Winning `Card` (Award icon, "Recognized for culinary excellence") from the About section, leaving the three remaining cards: Private Events, Premium Quality, Fresh Daily. The 4-column grid already collapses gracefully at 3 items (3 cards fit evenly on the large-screen row).
 
 ## Verification
 
