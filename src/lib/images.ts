@@ -11,6 +11,7 @@ import chocolateTruffles from "@/assets/chocolate-truffles.jpg";
 import prosciuttoAsparagus from "@/assets/prosciutto-asparagus.jpg";
 import salmonCanape from "@/assets/salmon-canape.jpg";
 import truffleTartlets from "@/assets/truffle-tartlets.jpg";
+import emeraldCooler from "@/assets/emerald-cooler.jpg";
 import coolerOriginal from '@/assets/guest-spotlight-botanical-cooler.jpg.asset.json';
 import breakfastOriginal from '@/assets/guest-spotlight-breakfast-spread.jpg.asset.json';
 import skilletOriginal from '@/assets/guest-spotlight-gouda-skillet.jpg.asset.json';
