@@ -11,6 +11,7 @@ import chocolateTruffles from "@/assets/chocolate-truffles.jpg";
 import prosciuttoAsparagus from "@/assets/prosciutto-asparagus.jpg";
 import salmonCanape from "@/assets/salmon-canape.jpg";
 import truffleTartlets from "@/assets/truffle-tartlets.jpg";
+import emeraldCooler from "@/assets/emerald-cooler.jpg";
 import coolerOriginal from '@/assets/guest-spotlight-botanical-cooler.jpg.asset.json';
 import breakfastOriginal from '@/assets/guest-spotlight-breakfast-spread.jpg.asset.json';
 import skilletOriginal from '@/assets/guest-spotlight-gouda-skillet.jpg.asset.json';
@@ -41,6 +42,7 @@ const bundled: Record<string, string> = {
   "prosciutto-asparagus.jpg": prosciuttoAsparagus,
   "salmon-canape.jpg": salmonCanape,
   "truffle-tartlets.jpg": truffleTartlets,
+  "emerald-cooler.jpg": emeraldCooler,
   'guest-spotlight-botanical-cooler.jpg': coolerOriginal.url,
   'guest-spotlight-breakfast-spread.jpg': breakfastOriginal.url,
   'guest-spotlight-gouda-skillet.jpg': skilletOriginal.url,
