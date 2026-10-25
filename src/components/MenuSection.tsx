@@ -2,24 +2,93 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Plus } from 'lucide-react';
+import { Plus, X } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
 import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
-import { useMenuCategories, useMenuItems } from '@/hooks/useContent';
+import { useMenuCategories, useMenuItems, type MenuItemRow } from '@/hooks/useContent';
 import { SectionHeading } from '@/components/kit/SectionKit';
+
+const ALLERGEN_LABELS: Record<string, string> = {
+  gluten: 'Gluten',
+  eggs: 'Eggs',
+  milk: 'Milk',
+  fish: 'Fish',
+  crustaceans: 'Crustaceans',
+  molluscs: 'Molluscs',
+  'tree-nuts': 'Nuts',
+  peanuts: 'Peanuts',
+  sesame: 'Sesame',
+  soya: 'Soya',
+  mustard: 'Mustard',
+  sulphites: 'Sulphites',
+  celery: 'Celery',
+  lupin: 'Lupin',
+};
+
+const DIETARY_LABELS: Record<string, string> = {
+  vegetarian: 'Vegetarian',
+  'vegetarian option': 'Vegetarian Option',
+  vegan: 'Vegan',
+  'vegan option': 'Vegan Option',
+  'gluten-free': 'Gluten-Free',
+  'gluten-free option': 'Gluten-Free Option',
+  halal: 'Halal',
+};
+
+const DIETARY_FILTERS: { key: string; label: string; tags: string[] }[] = [
+  { key: 'vegetarian', label: 'Vegetarian', tags: ['vegetarian', 'vegetarian option'] },
+  { key: 'vegan', label: 'Vegan', tags: ['vegan', 'vegan option'] },
+  { key: 'gluten-free', label: 'Gluten-Free', tags: ['gluten-free', 'gluten-free option'] },
+];
+
+const labelForAllergen = (key: string) => ALLERGEN_LABELS[key] ?? key;
+const labelForDietary = (tag: string) => DIETARY_LABELS[tag] ?? tag.replace(/(^|\s|-)\S/g, (c) => c.toUpperCase());
+
+const matchesDietaryFilter = (item: MenuItemRow, filter: (typeof DIETARY_FILTERS)[number]) =>
+  filter.tags.some((tag) => item.dietary_tags?.includes(tag));
 
 const MenuSection = () => {
   const { addToCart, openCart } = useCart();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [dietaryFilters, setDietaryFilters] = useState<string[]>([]);
+  const [avoidAllergens, setAvoidAllergens] = useState<string[]>([]);
 
   const { data: categories = [], isLoading: loadingCategories } = useMenuCategories();
   const { data: items = [], isLoading: loadingItems, isError } = useMenuItems();
 
+  // Every allergen present on the menu becomes a "free from" choice
+  const availableAllergens = useMemo(() => {
+    const present = new Set<string>();
+    items.forEach((item) => item.allergens?.forEach((a) => present.add(a)));
+    return [...present].sort((a, b) => (ALLERGEN_LABELS[a] ?? a).localeCompare(ALLERGEN_LABELS[b] ?? b));
+  }, [items]);
+
+  const toggleDietary = (key: string) =>
+    setDietaryFilters((current) =>
+      current.includes(key) ? current.filter((k) => k !== key) : [...current, key]
+    );
+
+  const toggleAvoid = (key: string) =>
+    setAvoidAllergens((current) =>
+      current.includes(key) ? current.filter((k) => k !== key) : [...current, key]
+    );
+
+  const clearFilters = () => {
+    setDietaryFilters([]);
+    setAvoidAllergens([]);
+  };
+
+  const hasActiveFilters = dietaryFilters.length > 0 || avoidAllergens.length > 0;
+
   const filteredItems = useMemo(() => {
-    const collection = selectedCategory === 'all' ? items : items.filter((item) => item.category_id === selectedCategory);
+    const activeDietary = DIETARY_FILTERS.filter((f) => dietaryFilters.includes(f.key));
+    const collection = items
+      .filter((item) => (selectedCategory === 'all' ? true : item.category_id === selectedCategory))
+      .filter((item) => activeDietary.every((filter) => matchesDietaryFilter(item, filter)))
+      .filter((item) => !(item.allergens ?? []).some((a) => avoidAllergens.includes(a)));
     return [...collection].sort((a, b) => Number(b.is_featured) - Number(a.is_featured));
-  }, [items, selectedCategory]);
+  }, [items, selectedCategory, dietaryFilters, avoidAllergens]);
 
   const isLoading = loadingCategories || loadingItems;
 
@@ -32,7 +101,7 @@ const MenuSection = () => {
           lede="Carefully crafted canapés, platters and treats — each one made to order in our London kitchen."
         />
 
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
+        <div className="flex flex-wrap justify-center gap-3 mb-6">
           <Button
             variant={selectedCategory === 'all' ? 'default' : 'outline'}
             onClick={() => setSelectedCategory('all')}
@@ -50,6 +119,61 @@ const MenuSection = () => {
               {category.name}
             </Button>
           ))}
+        </div>
+
+        {/* Dietary & allergen filters */}
+        <div className="max-w-3xl mx-auto mb-8 space-y-3 rounded-lg border border-border bg-card/70 px-5 py-4">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+            <span className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Dietary</span>
+            {DIETARY_FILTERS.map((filter) => (
+              <Button
+                key={filter.key}
+                type="button"
+                variant={dietaryFilters.includes(filter.key) ? 'default' : 'outline'}
+                size="sm"
+                aria-pressed={dietaryFilters.includes(filter.key)}
+                onClick={() => toggleDietary(filter.key)}
+                className="h-8 rounded-full px-4 text-xs transition-smooth"
+              >
+                {filter.label}
+              </Button>
+            ))}
+          </div>
+          {availableAllergens.length > 0 && (
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+              <span className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Free from</span>
+              {availableAllergens.map((allergen) => (
+                <Button
+                  key={allergen}
+                  type="button"
+                  variant={avoidAllergens.includes(allergen) ? 'default' : 'outline'}
+                  size="sm"
+                  aria-pressed={avoidAllergens.includes(allergen)}
+                  onClick={() => toggleAvoid(allergen)}
+                  className="h-8 rounded-full px-4 text-xs transition-smooth"
+                >
+                  {labelForAllergen(allergen)}
+                </Button>
+              ))}
+            </div>
+          )}
+          <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
+            <p className="text-xs text-muted-foreground">
+              Allergen details are a guide — please share any allergies with us when booking.
+            </p>
+            {hasActiveFilters && (
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={clearFilters}
+                className="h-8 text-xs text-muted-foreground hover:text-foreground"
+              >
+                <X className="h-3.5 w-3.5 mr-1" />
+                Clear filters
+              </Button>
+            )}
+          </div>
         </div>
 
         {isError && (
@@ -87,7 +211,7 @@ const MenuSection = () => {
                     {item.is_featured && <Badge className="bg-accent text-accent-foreground">Featured</Badge>}
                     {item.dietary_tags?.map((diet) => (
                       <Badge key={diet} variant="secondary" className="text-xs">
-                        {diet}
+                        {labelForDietary(diet)}
                       </Badge>
                     ))}
                   </div>
@@ -97,7 +221,18 @@ const MenuSection = () => {
                   {item.description && (
                     <p className="text-sm text-muted-foreground leading-relaxed mb-2">{item.description}</p>
                   )}
-                  {item.serves && <p className="text-xs text-muted-foreground mb-4">{item.serves}</p>}
+                  {item.serves && <p className="text-xs text-muted-foreground mb-1">{item.serves}</p>}
+
+                  <p className="text-xs text-muted-foreground mb-4">
+                    {(item.allergens ?? []).length > 0 ? (
+                      <>
+                        <span className="font-medium text-foreground/70">Contains:</span>{' '}
+                        {item.allergens.map((a) => labelForAllergen(a)).join(', ')}
+                      </>
+                    ) : (
+                      'No listed allergens'
+                    )}
+                  </p>
 
                   <div className="text-2xl font-light text-accent">£{Number(item.price).toFixed(2)}</div>
                 </CardContent>
@@ -127,7 +262,11 @@ const MenuSection = () => {
         </div>
 
         {!isLoading && filteredItems.length === 0 && !isError && (
-          <p className="text-center text-muted-foreground">No items in this collection yet.</p>
+          <p className="text-center text-muted-foreground">
+            {hasActiveFilters
+              ? 'No items match these dietary filters — try removing one.'
+              : 'No items in this collection yet.'}
+          </p>
         )}
       </div>
     </section>

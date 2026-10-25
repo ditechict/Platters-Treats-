@@ -98,9 +98,8 @@ const Hero = () => {
           
           <Button 
             asChild 
-            variant="outline" 
             size="lg" 
-            className="border-white/30 text-white hover:bg-white/10 backdrop-blur-sm font-medium px-8 py-3"
+            className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 shadow-elegant font-medium px-8 py-3"
           >
             <Link to="/contact">Reserve a Table</Link>
           </Button>

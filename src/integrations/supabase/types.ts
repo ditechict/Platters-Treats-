@@ -181,6 +181,7 @@ export type Database = {
       }
       menu_items: {
         Row: {
+          allergens: string[] | null
           category_id: string | null
           created_at: string
           description: string | null
@@ -196,6 +197,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          allergens?: string[] | null
           category_id?: string | null
           created_at?: string
           description?: string | null
@@ -211,6 +213,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          allergens?: string[] | null
           category_id?: string | null
           created_at?: string
           description?: string | null

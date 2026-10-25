@@ -18,6 +18,7 @@ export interface MenuItemRow {
   price: number;
   image_url: string | null;
   dietary_tags: string[];
+  allergens: string[];
   serves: string | null;
   is_featured: boolean;
   is_available: boolean;
