@@ -42,6 +42,7 @@ const bundled: Record<string, string> = {
   "prosciutto-asparagus.jpg": prosciuttoAsparagus,
   "salmon-canape.jpg": salmonCanape,
   "truffle-tartlets.jpg": truffleTartlets,
+  "emerald-cooler.jpg": emeraldCooler,
   'guest-spotlight-botanical-cooler.jpg': coolerOriginal.url,
   'guest-spotlight-breakfast-spread.jpg': breakfastOriginal.url,
   'guest-spotlight-gouda-skillet.jpg': skilletOriginal.url,
