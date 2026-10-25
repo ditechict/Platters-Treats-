@@ -29,6 +29,13 @@
       "when": 1792372203856,
       "tag": "0003_add_private_tasting_booking_details",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1792959059322,
+      "tag": "0004_add_menu_item_allergens",
+      "breakpoints": true
     }
   ]
 }

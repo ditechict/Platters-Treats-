@@ -1,0 +1,2 @@
+ALTER TABLE public.menu_items ADD COLUMN IF NOT EXISTS allergens text[];
+COMMENT ON COLUMN public.menu_items.allergens IS 'UK 14 allergens contained in the item, snake_case keys (gluten, eggs, milk, fish, tree-nuts, mustard, sulphites, sesame, soya, crustaceans, molluscs, celery, peanuts, lupin); empty array means none listed';
