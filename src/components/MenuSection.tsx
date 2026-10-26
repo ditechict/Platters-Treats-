@@ -8,45 +8,14 @@ import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import { useMenuCategories, useMenuItems, type MenuItemRow } from '@/hooks/useContent';
 import { SectionHeading } from '@/components/kit/SectionKit';
-
-const ALLERGEN_LABELS: Record<string, string> = {
-  gluten: 'Gluten',
-  eggs: 'Eggs',
-  milk: 'Milk',
-  fish: 'Fish',
-  crustaceans: 'Crustaceans',
-  molluscs: 'Molluscs',
-  'tree-nuts': 'Nuts',
-  peanuts: 'Peanuts',
-  sesame: 'Sesame',
-  soya: 'Soya',
-  mustard: 'Mustard',
-  sulphites: 'Sulphites',
-  celery: 'Celery',
-  lupin: 'Lupin',
-};
-
-const DIETARY_LABELS: Record<string, string> = {
-  vegetarian: 'Vegetarian',
-  'vegetarian option': 'Vegetarian Option',
-  vegan: 'Vegan',
-  'vegan option': 'Vegan Option',
-  'gluten-free': 'Gluten-Free',
-  'gluten-free option': 'Gluten-Free Option',
-  halal: 'Halal',
-};
-
-const DIETARY_FILTERS: { key: string; label: string; tags: string[] }[] = [
-  { key: 'vegetarian', label: 'Vegetarian', tags: ['vegetarian', 'vegetarian option'] },
-  { key: 'vegan', label: 'Vegan', tags: ['vegan', 'vegan option'] },
-  { key: 'gluten-free', label: 'Gluten-Free', tags: ['gluten-free', 'gluten-free option'] },
-];
-
-const labelForAllergen = (key: string) => ALLERGEN_LABELS[key] ?? key;
-const labelForDietary = (tag: string) => DIETARY_LABELS[tag] ?? tag.replace(/(^|\s|-)\S/g, (c) => c.toUpperCase());
-
-const matchesDietaryFilter = (item: MenuItemRow, filter: (typeof DIETARY_FILTERS)[number]) =>
-  filter.tags.some((tag) => item.dietary_tags?.includes(tag));
+import {
+  DIETARY_FILTERS,
+  avoidsSelectedAllergens,
+  labelForAllergen,
+  labelForDietary,
+  matchesDietaryFilter,
+  presentAllergens,
+} from '@/lib/menuFilters';
 
 const MenuSection = () => {
   const { addToCart, openCart } = useCart();
