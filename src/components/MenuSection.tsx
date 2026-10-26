@@ -27,11 +27,7 @@ const MenuSection = () => {
   const { data: items = [], isLoading: loadingItems, isError } = useMenuItems();
 
   // Every allergen present on the menu becomes a "free from" choice
-  const availableAllergens = useMemo(() => {
-    const present = new Set<string>();
-    items.forEach((item) => item.allergens?.forEach((a) => present.add(a)));
-    return [...present].sort((a, b) => (ALLERGEN_LABELS[a] ?? a).localeCompare(ALLERGEN_LABELS[b] ?? b));
-  }, [items]);
+  const availableAllergens = useMemo(() => presentAllergens(items), [items]);
 
   const toggleDietary = (key: string) =>
     setDietaryFilters((current) =>
@@ -54,8 +50,8 @@ const MenuSection = () => {
     const activeDietary = DIETARY_FILTERS.filter((f) => dietaryFilters.includes(f.key));
     const collection = items
       .filter((item) => (selectedCategory === 'all' ? true : item.category_id === selectedCategory))
-      .filter((item) => activeDietary.every((filter) => matchesDietaryFilter(item, filter)))
-      .filter((item) => !(item.allergens ?? []).some((a) => avoidAllergens.includes(a)));
+      .filter((item) => activeDietary.every((filter) => matchesDietaryFilter(item.dietary_tags ?? [], filter)))
+      .filter((item) => avoidsSelectedAllergens(item.allergens ?? [], avoidAllergens));
     return [...collection].sort((a, b) => Number(b.is_featured) - Number(a.is_featured));
   }, [items, selectedCategory, dietaryFilters, avoidAllergens]);
 
