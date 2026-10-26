@@ -6,7 +6,7 @@ import { Plus, X } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
 import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
-import { useMenuCategories, useMenuItems, type MenuItemRow } from '@/hooks/useContent';
+import { useMenuCategories, useMenuItems } from '@/hooks/useContent';
 import { SectionHeading } from '@/components/kit/SectionKit';
 import {
   DIETARY_FILTERS,
