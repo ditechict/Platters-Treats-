@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 import { supabase } from '@/integrations/supabase/client';
 import Footer from '@/components/Footer';
+import { siteBrand } from '@/lib/siteBrand';
 
 const contactSchema = z.object({
   name: z.string()
@@ -96,10 +97,10 @@ const Contact = () => {
         <div className="py-16 bg-primary text-primary-foreground">
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-4xl md:text-6xl font-elegant font-light mb-4 heading-elegant">
-              Contact Us
+              Visit Zeren
             </h1>
             <p className="text-xl md:text-2xl font-light opacity-90 max-w-2xl mx-auto">
-              Get in touch to create your perfect dining experience
+              Find us in Oval for brunch, coffee and a warm welcome.
             </p>
           </div>
         </div>
@@ -112,11 +113,10 @@ const Contact = () => {
               <div className="space-y-8">
                 <div>
                   <h2 className="text-3xl font-elegant font-light mb-6 text-primary">
-                    Visit Our Restaurant
+                    Come by Zeren
                   </h2>
                   <p className="text-lg text-muted-foreground mb-8">
-                    Located in the heart of London, we offer an intimate dining experience 
-                    with the finest canapés and artisanal treats.
+                    Stop in for Afro-inspired brunch, pancakes, matcha, mocktails and coffee. We also welcome catering enquiries.
                   </p>
                 </div>
 
@@ -128,8 +128,8 @@ const Contact = () => {
                         <div>
                           <h3 className="font-medium text-primary mb-2">Address</h3>
                           <p className="text-muted-foreground">
-                            123 Elegant Street<br />
-                            Mayfair, London W1K 5NA<br />
+                            {siteBrand.address[0]}<br />
+                            {siteBrand.address[1]}<br />
                             United Kingdom
                           </p>
                         </div>
@@ -143,7 +143,7 @@ const Contact = () => {
                         <Phone className="h-6 w-6 text-accent mt-1" />
                         <div>
                           <h3 className="font-medium text-primary mb-2">Phone</h3>
-                          <p className="text-muted-foreground">+44 20 7123 4567</p>
+                          {siteBrand.phone ? <p className="text-muted-foreground">{siteBrand.phone}</p> : <p className="text-muted-foreground">Phone details coming soon</p>}
                         </div>
                       </div>
                     </CardContent>
@@ -155,13 +155,13 @@ const Contact = () => {
                         <Mail className="h-6 w-6 text-accent mt-1" />
                         <div>
                           <h3 className="font-medium text-primary mb-2">Email</h3>
-                          <p className="text-muted-foreground">hello@canapesandtreats.co.uk</p>
+                          {siteBrand.email ? <p className="text-muted-foreground">{siteBrand.email}</p> : <p className="text-muted-foreground">Email details coming soon</p>}
                         </div>
                       </div>
                     </CardContent>
                   </Card>
 
-                  <Card className="border-0 shadow-soft">
+                  {siteBrand.openingHours && <Card className="border-0 shadow-soft">
                     <CardContent className="p-6">
                       <div className="flex items-start space-x-4">
                         <Clock className="h-6 w-6 text-accent mt-1" />
@@ -175,7 +175,7 @@ const Contact = () => {
                         </div>
                       </div>
                     </CardContent>
-                  </Card>
+                  </Card>}
                 </div>
               </div>
 

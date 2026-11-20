@@ -2,50 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Canapés & Treats Pretty Platters — brand design system
-   Identity: deep charcoal ink, warm ivory, champagne gold used sparingly.
+/* Zeren Café & Catering — brand design system
+   Identity: deep ink, fresh sage, bright natural neutrals, and restrained warm gold.
    Display: Cormorant Garamond (editorial serif) · Body: Jost (clean geometric sans).
    All colors are HSL and themed through semantic tokens. */
 
 @layer base {
   :root {
     /* Warm ivory canvas + charcoal ink */
-    --background: 42 33% 97%;
-    --foreground: 220 16% 12%;
+    --background: 100 18% 97%;
+    --foreground: 150 14% 15%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 16% 12%;
+    --card: 100 15% 99%;
+    --card-foreground: 150 14% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 16% 12%;
+    --popover: 100 15% 99%;
+    --popover-foreground: 150 14% 15%;
 
-    --primary: 220 16% 12%;
-    --primary-foreground: 42 33% 97%;
+    --primary: 150 14% 15%;
+    --primary-foreground: 100 18% 97%;
 
-    --secondary: 42 25% 93%;
-    --secondary-foreground: 220 16% 12%;
+    --secondary: 115 16% 91%;
+    --secondary-foreground: 150 14% 15%;
 
-    --muted: 42 20% 91%;
-    --muted-foreground: 220 8% 42%;
+    --muted: 110 12% 91%;
+    --muted-foreground: 150 7% 41%;
 
     /* Champagne gold — deepened for contrast; used sparingly */
-    --accent: 40 55% 52%;
-    --accent-foreground: 220 16% 12%;
+    --accent: 39 47% 48%;
+    --accent-foreground: 150 14% 12%;
 
     --destructive: 0 70% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 20% 87%;
-    --input: 40 20% 87%;
-    --ring: 40 55% 52%;
+    --border: 115 12% 84%;
+    --input: 115 12% 84%;
+    --ring: 118 15% 42%;
 
     --blush: 350 45% 90%;
-    --sage: 120 15% 86%;
+    --sage: 118 16% 84%;
     --cream: 45 35% 96%;
 
-    --gradient-hero: linear-gradient(160deg, hsl(220 16% 10%), hsl(220 18% 16%));
-    --gradient-gold: linear-gradient(135deg, hsl(40 60% 60%), hsl(38 55% 48%));
-    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(43 30% 96%));
+    --gradient-hero: linear-gradient(155deg, hsl(150 14% 12%), hsl(150 18% 24%));
+    --gradient-gold: linear-gradient(135deg, hsl(40 50% 61%), hsl(38 45% 46%));
+    --gradient-subtle: linear-gradient(180deg, hsl(100 15% 98%), hsl(115 20% 94%));
 
     --shadow-soft: 0 4px 20px -2px hsl(220 16% 12% / 0.08);
     --shadow-elegant: 0 8px 30px -4px hsl(220 16% 12% / 0.12);

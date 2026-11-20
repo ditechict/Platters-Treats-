@@ -3,14 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ShoppingBag } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
 import { cn } from '@/lib/utils';
-
-const navigation = [
-  { name: 'Home', href: '/' },
-  { name: 'Menu', href: '/menu' },
-  { name: 'Gallery', href: '/gallery' },
-  { name: 'Quote', href: '/quote' },
-  { name: 'Contact', href: '/contact' },
-];
+import BrandLockup from '@/components/BrandLockup';
+import { siteNavigation } from '@/lib/siteBrand';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -54,24 +48,13 @@ const Header = () => {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
-          {/* Wordmark */}
-          <Link to="/" className={cn('transition-smooth', transparent ? 'text-white' : 'text-primary')}>
-            <span className="font-display text-2xl md:text-[1.7rem] font-light heading-elegant block leading-none">
-              Canapés &amp; Treats
-            </span>
-            <span
-              className={cn(
-                'text-[0.65rem] uppercase tracking-[0.35em] font-light',
-                transparent ? 'text-white/70' : 'text-accent'
-              )}
-            >
-              Pretty Platters
-            </span>
-          </Link>
+          <div className={cn('transition-smooth', transparent ? 'text-primary-foreground' : 'text-primary')}>
+            <BrandLockup />
+          </div>
 
           {/* Desktop navigation */}
           <nav className="hidden md:flex items-center gap-9" aria-label="Primary">
-            {navigation.map((item) => {
+            {siteNavigation.map((item) => {
               const active = location.pathname === item.href;
               return (
                 <Link
@@ -82,8 +65,8 @@ const Header = () => {
                     'relative text-sm font-light tracking-[0.14em] uppercase transition-smooth pb-1',
                     transparent
                       ? active
-                        ? 'text-white'
-                        : 'text-white/70 hover:text-white'
+                        ? 'text-primary-foreground'
+                        : 'text-primary-foreground/70 hover:text-primary-foreground'
                       : active
                         ? 'text-primary'
                         : 'text-muted-foreground hover:text-primary',
@@ -104,7 +87,7 @@ const Header = () => {
               aria-label={`Open basket${cartCount ? `, ${cartCount} items` : ''}`}
               className={cn(
                 'relative p-2 transition-smooth',
-                transparent ? 'text-white hover:text-accent' : 'text-primary hover:text-accent'
+                transparent ? 'text-primary-foreground hover:text-accent' : 'text-primary hover:text-accent'
               )}
             >
               <ShoppingBag className="h-5 w-5" strokeWidth={1.5} />
@@ -119,11 +102,11 @@ const Header = () => {
               className={cn(
                 'hidden lg:inline-block text-sm font-light tracking-[0.14em] uppercase border px-6 py-2.5 transition-smooth',
                 transparent
-                  ? 'border-white/40 text-white hover:bg-white/10'
+                  ? 'border-primary-foreground/40 text-primary-foreground hover:bg-primary-foreground/10'
                   : 'border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground'
               )}
             >
-              Enquire
+              Visit Zeren
             </Link>
           </div>
 
@@ -132,7 +115,7 @@ const Header = () => {
             <button
               onClick={openCart}
               aria-label={`Open basket${cartCount ? `, ${cartCount} items` : ''}`}
-              className={cn('relative p-2', transparent ? 'text-white' : 'text-primary')}
+              className={cn('relative p-2', transparent ? 'text-primary-foreground' : 'text-primary')}
             >
               <ShoppingBag className="h-5 w-5" strokeWidth={1.5} />
               {cartCount > 0 && (
@@ -157,7 +140,7 @@ const Header = () => {
       {isMenuOpen && (
         <div className="md:hidden fixed inset-0 top-20 bg-background z-40 flex flex-col">
           <nav className="flex flex-col px-8 pt-10 gap-2" aria-label="Mobile">
-            {navigation.map((item, i) => (
+            {siteNavigation.map((item, i) => (
               <Link
                 key={item.name}
                 to={item.href}
@@ -176,7 +159,7 @@ const Header = () => {
               to="/contact"
               className="block text-center text-sm font-light tracking-[0.2em] uppercase border border-primary/30 text-primary px-6 py-3.5 hover:bg-primary hover:text-primary-foreground transition-smooth"
             >
-              Make an Enquiry
+              Plan Catering
             </Link>
           </div>
         </div>

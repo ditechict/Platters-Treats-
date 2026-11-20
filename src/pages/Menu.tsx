@@ -15,10 +15,10 @@ const Menu = () => {
         <div className="py-16 bg-primary text-primary-foreground">
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-4xl md:text-6xl font-elegant font-light mb-4 heading-elegant">
-              Our Menu
+              Zeren Menu
             </h1>
             <p className="text-xl md:text-2xl font-light opacity-90 max-w-2xl mx-auto">
-              Discover our exquisite collection of canapés, platters, and artisanal treats
+              Afro-brunch, pancakes, French toast, Full English, matcha, mocktails and coffee.
             </p>
           </div>
         </div>

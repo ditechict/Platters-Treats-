@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import clocheLogo from '@/assets/pretty-platters-logo-cloche.png';
+import logo from '@/assets/zeren-logo.svg';
 
 interface BrandLockupProps {
   variant?: 'header' | 'footer';
@@ -11,34 +11,18 @@ const BrandLockup = ({ variant = 'header' }: BrandLockupProps) => {
   return (
     <Link
       to="/"
-      aria-label="Canapés and Treats Pretty Platters home"
+      aria-label="Zeren Café and Catering home"
       className={isFooter ? 'inline-flex items-center gap-3' : 'inline-flex min-w-0 items-center gap-2'}
     >
-      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-background p-1.5">
-        <img
-          src={clocheLogo}
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          width={1024}
-          height={1024}
-          className="h-full w-full object-contain"
-        />
+      <span className={`flex shrink-0 items-center justify-center text-primary ${isFooter ? 'h-11 w-11' : 'h-10 w-10'}`}>
+        <img src={logo} alt="" aria-hidden="true" width={64} height={64} className="h-full w-full object-contain" />
       </span>
       <span className="min-w-0">
-        <span
-          className={isFooter
-            ? 'block font-display text-2xl font-light leading-none heading-elegant text-primary-foreground'
-            : 'block whitespace-nowrap font-display text-[1.05rem] font-light leading-none heading-elegant text-current sm:text-2xl'}
-        >
-          Canapés &amp; Treats
+        <span className={`block font-display font-medium leading-none heading-elegant ${isFooter ? 'text-2xl text-primary-foreground' : 'text-2xl text-current'}`}>
+          Zeren
         </span>
-        <span
-          className={isFooter
-            ? 'mt-1 block text-xs uppercase text-accent'
-            : 'mt-1 block text-[0.57rem] font-light uppercase tracking-[0.22em] text-accent sm:text-[0.65rem] sm:tracking-[0.35em]'}
-        >
-          Pretty Platters
+        <span className={`mt-1 block text-[0.62rem] font-medium uppercase text-accent ${isFooter ? 'tracking-[0.2em]' : 'tracking-[0.22em]'}`}>
+          Café &amp; Catering
         </span>
       </span>
     </Link>
