@@ -18,12 +18,15 @@ const Gallery = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const categories = useMemo(
-    () => Array.from(new Set(images.map((i) => i.category).filter(Boolean))) as string[],
+  const guestMoments = useMemo(
+    () => images.filter((image) => image.category === 'Guest Moments'),
     [images]
   );
-
-  const visible = filter === 'all' ? images : images.filter((i) => i.category === filter);
+  const categories = useMemo(
+    () => Array.from(new Set(guestMoments.map((image) => image.category).filter(Boolean))) as string[],
+    [guestMoments]
+  );
+  const visible = filter === 'all' ? guestMoments : guestMoments.filter((image) => image.category === filter);
 
   return (
     <div className="min-h-screen">
@@ -33,7 +36,7 @@ const Gallery = () => {
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-4xl md:text-6xl font-display font-light mb-4 heading-elegant">Gallery</h1>
             <p className="text-xl md:text-2xl font-light opacity-90 max-w-2xl mx-auto">
-              A visual journey through our culinary artistry and elegant presentations
+              Brunch plates, fresh pours and moments around the Zeren table.
             </p>
           </div>
         </div>
@@ -57,7 +60,7 @@ const Gallery = () => {
 
             {isError && (
               <p className="text-center text-muted-foreground">
-                We couldn't load the gallery just now. Please refresh the page.
+                We couldn’t load the gallery just now. Please refresh the page.
               </p>
             )}
 
@@ -83,7 +86,7 @@ const Gallery = () => {
                       >
                         <img
                           src={guestMomentForRef(image.image_url)?.src ?? image.src}
-                          alt={guestMomentForRef(image.image_url)?.alt ?? image.title ?? 'Canapés and Treats presentation'}
+                          alt={guestMomentForRef(image.image_url)?.alt ?? image.title ?? 'Brunch at Zeren'}
                           loading="lazy"
                           className="w-full h-full object-cover transition-smooth hover:scale-105"
                         />
@@ -102,14 +105,14 @@ const Gallery = () => {
         <section className="py-20 bg-card">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl md:text-4xl font-display font-light mb-6 text-primary">
-              Ready to create your perfect event?
+              Join us in Oval or plan a gathering with Zeren.
             </h2>
             <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Let us craft a bespoke catering experience that will leave your guests in awe.
+              Find your next brunch favourite or tell us about the event you’re planning.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-gold">
-                <Link to="/contact">Request a quote</Link>
+                <Link to="/quote">Catering enquiry</Link>
               </Button>
               <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                 <Link to="/menu">View menu</Link>

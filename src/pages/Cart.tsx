@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
 import Header from '@/components/Header';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
-import { toast } from 'sonner';
 
 const Cart = () => {
   const { cartItems, updateQuantity, removeFromCart, getTotalPrice, clearCart } = useCart();
@@ -20,11 +20,7 @@ const Cart = () => {
 
   const handleRemoveItem = (id: string, name: string) => {
     removeFromCart(id);
-    toast.success(`${name} removed from cart`);
-  };
-
-  const handleCheckout = () => {
-    toast.success('Checkout functionality coming soon! Please contact us to complete your order.');
+    toast.success(`${name} removed from basket`);
   };
 
   if (cartItems.length === 0) {
@@ -40,7 +36,7 @@ const Cart = () => {
                   Your Cart is Empty
                 </h2>
                 <p className="text-muted-foreground mb-8">
-                  Discover our exquisite canapés and artisanal treats
+                  Browse Zeren’s café menu and brunch highlights.
                 </p>
                 <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90">
                   <Link to="/menu">Browse Menu</Link>
@@ -64,7 +60,7 @@ const Cart = () => {
               Your Cart
             </h1>
             <p className="text-xl md:text-2xl font-light opacity-90">
-              Review your selection of fine canapés and treats
+              Review your saved selection. Online payment is not currently available.
             </p>
           </div>
         </div>
@@ -173,11 +169,8 @@ const Cart = () => {
                     </div>
                     
                     <div className="space-y-3">
-                      <Button 
-                        onClick={handleCheckout}
-                        className="w-full bg-accent text-accent-foreground hover:bg-accent/90 shadow-gold"
-                      >
-                        Proceed to Checkout
+                      <Button asChild className="w-full bg-accent text-accent-foreground hover:bg-accent/90 shadow-gold">
+                        <Link to="/contact">Contact Zeren about this selection</Link>
                       </Button>
                       
                       <Button asChild variant="outline" className="w-full">

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -10,9 +10,7 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
-import { useQuoteSettings, computeEstimate, DEFAULT_QUOTE_SETTINGS } from '@/hooks/useQuoteSettings';
 import { Switch } from '@/components/ui/switch';
-import { computeTastingFee, TASTING_FEE } from '@/lib/tasting';
 import { GUEST_MOMENTS } from '@/lib/images';
 
 const MIN_GUESTS = 10;
@@ -27,13 +25,20 @@ const bookingSchema = z.object({
   tastingNotes: z.string().trim().max(2000).optional().or(z.literal('')),
 });
 
-const formatGBP = (value: number) =>
-  new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 0 }).format(value);
+const EVENT_STYLES = [
+  { id: 'afro-brunch', label: 'Afro-Brunch Spread', description: 'Generous brunch favourites for a shared table.' },
+  { id: 'breakfast-brunch', label: 'Breakfast & Brunch', description: 'A relaxed morning gathering.' },
+  { id: 'brunch-platters', label: 'Brunch Platters', description: 'Plates to share around the table.' },
+  { id: 'custom', label: 'Something Custom', description: 'Tell us what you have in mind.' },
+];
+
+const SERVICE_LEVELS = [
+  { id: 'delivery-only', label: 'Delivery', description: 'Food delivered to your venue.' },
+  { id: 'setup-styling', label: 'Set-up & Styling', description: 'Ask us to arrange the food display.' },
+  { id: 'staffed-service', label: 'Staffed Service', description: 'Ask about service staff for your event.' },
+];
 
 const Quote = () => {
-  const { data: settings = DEFAULT_QUOTE_SETTINGS } = useQuoteSettings();
-  const EVENT_STYLES = settings.eventStyles;
-  const SERVICE_LEVELS = settings.serviceLevels;
   const [guests, setGuests] = useState(50);
   const [styleId, setStyleId] = useState<string>(EVENT_STYLES[0].id);
   const [serviceId, setServiceId] = useState<string>(SERVICE_LEVELS[0].id);
@@ -48,15 +53,6 @@ const Quote = () => {
 
   const style = EVENT_STYLES.find((s) => s.id === styleId) ?? EVENT_STYLES[0];
   const service = SERVICE_LEVELS.find((s) => s.id === serviceId) ?? SERVICE_LEVELS[0];
-
-  const estimate = useMemo(
-    () => computeEstimate(guests, style.perPerson, service.multiplier, settings.minSpend),
-    [guests, style, service, settings.minSpend]
-  );
-
-  const tastingFee = computeTastingFee(hasTasting, estimate, guests);
-  const totalEstimate = estimate + tastingFee;
-  const perPerson = guests > 0 ? estimate / guests : 0;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,9 +70,8 @@ const Quote = () => {
     }
 
     const summary = [
-       `Event estimate: ${formatGBP(estimate)} (${guests} guests, ${style.label}, ${service.label})`,
-       hasTasting ? `Private Tasting & Menu Consultation: ${tastingFee === 0 ? 'Complimentary' : formatGBP(tastingFee)}` : null,
-       `Total estimate: ${formatGBP(totalEstimate)}`,
+       `Catering enquiry: ${guests} guests, ${style.label}, ${service.label}`,
+       hasTasting ? 'Private Tasting & Menu Consultation requested; pricing to be confirmed.' : null,
       form.notes.trim() ? `Notes: ${form.notes.trim()}` : null,
     ].filter(Boolean).join('\n');
 
@@ -96,11 +91,11 @@ const Quote = () => {
     setSubmitting(false);
 
     if (error) {
-      toast.error("We couldn't send your booking request. Please try again or call us.");
+      toast.error("We couldn't submit your catering enquiry just now. Please try again.");
       return;
     }
 
-    toast.success("Thank you! Your booking request has been sent — we'll confirm your quote shortly.");
+    toast.success('Thank you — your catering enquiry has been received.');
      setForm({ name: '', email: '', phone: '', eventDate: '', notes: '', tastingNotes: '' });
      setHasTasting(false);
   };
@@ -116,10 +111,10 @@ const Quote = () => {
         <div className="py-16 bg-primary text-primary-foreground">
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-4xl md:text-6xl font-elegant font-light mb-4 heading-elegant">
-              Event Quote Calculator
+              Catering Enquiry
             </h1>
             <p className="text-xl md:text-2xl font-light opacity-90 max-w-2xl mx-auto">
-              Shape your event in moments and receive an instant estimate
+              Tell us about your gathering and the service you have in mind.
             </p>
           </div>
         </div>
@@ -127,7 +122,7 @@ const Quote = () => {
         <section className="py-20 subtle-gradient">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              {/* Calculator */}
+                {/* Event details */}
               <div className="space-y-8">
                 {/* Guests */}
                 <Card className="border-0 shadow-soft">
@@ -163,22 +158,17 @@ const Quote = () => {
                     </h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {EVENT_STYLES.map((s) => (
-                        <button
+                        <Button
                           key={s.id}
                           type="button"
+                          variant={styleId === s.id ? 'secondary' : 'outline'}
                           onClick={() => setStyleId(s.id)}
                           aria-pressed={styleId === s.id}
-                          className={cn(
-                            'text-left p-4 rounded-md border transition-smooth',
-                            styleId === s.id
-                              ? 'border-accent bg-accent/10 shadow-gold'
-                              : 'border-border hover:border-accent/50'
-                          )}
+                          className={cn('h-auto justify-start whitespace-normal p-4 text-left', styleId === s.id && 'border-accent shadow-gold')}
                         >
                           <span className="block font-medium text-primary">{s.label}</span>
                           <span className="block text-xs text-muted-foreground mt-1">{s.description}</span>
-                          <span className="block text-sm text-accent mt-2">{formatGBP(s.perPerson)} / guest</span>
-                        </button>
+                        </Button>
                       ))}
                     </div>
                   </CardContent>
@@ -192,26 +182,19 @@ const Quote = () => {
                     </h2>
                     <div className="space-y-3">
                       {SERVICE_LEVELS.map((s) => (
-                        <button
+                        <Button
                           key={s.id}
                           type="button"
+                          variant={serviceId === s.id ? 'secondary' : 'outline'}
                           onClick={() => setServiceId(s.id)}
                           aria-pressed={serviceId === s.id}
-                          className={cn(
-                            'w-full text-left p-4 rounded-md border transition-smooth flex items-center justify-between gap-4',
-                            serviceId === s.id
-                              ? 'border-accent bg-accent/10 shadow-gold'
-                              : 'border-border hover:border-accent/50'
-                          )}
+                          className={cn('h-auto w-full justify-between gap-4 whitespace-normal p-4 text-left', serviceId === s.id && 'border-accent shadow-gold')}
                         >
                           <span>
                             <span className="block font-medium text-primary">{s.label}</span>
                             <span className="block text-xs text-muted-foreground mt-1">{s.description}</span>
                           </span>
-                          <span className="text-sm text-accent whitespace-nowrap">
-                            {s.multiplier === 1 ? 'Included' : `+${Math.round((s.multiplier - 1) * 100)}%`}
-                          </span>
-                        </button>
+                        </Button>
                       ))}
                     </div>
                   </CardContent>
@@ -221,14 +204,13 @@ const Quote = () => {
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <h2 className="font-display text-3xl text-primary mb-2">Private Tasting &amp; Menu Consultation</h2>
-                      <p className="text-sm text-muted-foreground">£85 flat fee · Complimentary on event quotes over £1,000 or for 40+ guests.</p>
+                      <p className="text-sm text-muted-foreground">Request a private tasting alongside your catering enquiry. Availability and pricing will be confirmed with you.</p>
                     </div>
                     <Switch id="q-tasting" checked={hasTasting} onCheckedChange={setHasTasting} aria-label="Add Private Tasting Session" />
                   </div>
                   <label htmlFor="q-tasting" className="block text-sm text-primary mt-4">Add Private Tasting Session</label>
                   {hasTasting && (
                     <div className="mt-4 space-y-3">
-                      <p className="text-accent font-medium" aria-live="polite">{tastingFee === 0 ? 'Complimentary tasting included' : `${formatGBP(TASTING_FEE)} tasting added`}</p>
                       <label htmlFor="q-tasting-notes" className="block text-sm text-primary">Tasting preferences</label>
                       <Textarea id="q-tasting-notes" name="tastingNotes" value={form.tastingNotes} onChange={handleChange} maxLength={2000} rows={3} placeholder="Dishes to try, dietary requirements, preferred timing…" aria-invalid={!!errors.tastingNotes} />
                       {errors.tastingNotes && <p className="text-sm text-destructive">{errors.tastingNotes}</p>}
@@ -237,29 +219,22 @@ const Quote = () => {
                 </div>
               </div>
 
-              {/* Estimate + booking form */}
+              {/* Enquiry summary + booking form */}
               <div className="space-y-8">
                 <Card className="border-0 shadow-elegant bg-primary text-primary-foreground">
                   <CardContent className="p-8 text-center">
-                    <p className="text-sm uppercase tracking-[0.25em] opacity-70 mb-2">Your Estimate</p>
-                    <p className="font-display text-5xl md:text-6xl heading-elegant text-accent" aria-live="polite">
-                       {formatGBP(totalEstimate)}
-                    </p>
-                    <p className="text-sm opacity-80 mt-3">
-                      {guests} guests · {style.label} · {service.label}
-                    </p>
-                    <p className="text-xs opacity-60 mt-1">≈ {formatGBP(perPerson)} per guest</p>
-                     {hasTasting && <p className="text-sm text-accent mt-3">Event {formatGBP(estimate)} · Tasting {tastingFee === 0 ? 'complimentary' : formatGBP(tastingFee)}</p>}
-                    <p className="text-xs opacity-60 mt-4">
-                      Indicative estimate only — your final quote is confirmed after we review your request.
-                    </p>
+                    <p className="text-sm uppercase tracking-[0.25em] opacity-70 mb-2">Your enquiry</p>
+                    <p className="font-display text-4xl md:text-5xl heading-elegant text-accent" aria-live="polite">{guests} guests</p>
+                    <p className="text-sm opacity-80 mt-3">{style.label} · {service.label}</p>
+                    {hasTasting && <p className="text-sm text-accent mt-3">Private tasting requested</p>}
+                    <p className="text-xs opacity-70 mt-4">We’ll confirm menu options, availability and pricing after reviewing your request.</p>
                   </CardContent>
                 </Card>
 
                 <Card className="border-0 shadow-elegant">
                   <CardHeader>
                     <CardTitle className="text-2xl font-elegant font-light text-primary">
-                      Request This Quote
+                      Send a Catering Enquiry
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -321,7 +296,7 @@ const Quote = () => {
                         disabled={submitting}
                         className="w-full bg-accent text-accent-foreground hover:bg-accent/90 shadow-gold font-medium py-3"
                       >
-                         {submitting ? 'Sending…' : `Request Quote — ${formatGBP(totalEstimate)}`}
+                         {submitting ? 'Sending…' : 'Send Catering Enquiry'}
                       </Button>
                     </form>
                   </CardContent>

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import heroImage from '@/assets/hero-canapes.jpg';
 import brunchPhoto from '@/assets/zeren-brunch-spread.jpeg.asset.json';
 import breakfastWeb from '@/assets/guest-spotlight-breakfast-spread.webp.asset.json';
 
@@ -39,7 +38,7 @@ const Hero = () => {
 
   return (
     <section
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative flex min-h-[38rem] items-center justify-center overflow-hidden md:min-h-[42rem]"
       aria-roledescription="carousel"
       aria-label="Featured dining photography"
       onMouseEnter={() => setIsPaused(true)}
@@ -61,7 +60,7 @@ const Hero = () => {
             }`}
           />
         ))}
-        <div className="absolute inset-0 hero-gradient opacity-60"></div>
+        <div className="absolute inset-0 hero-gradient opacity-45"></div>
         <div key={activeSlide} className="hero-light-sweep" aria-hidden="true" />
       </div>
 

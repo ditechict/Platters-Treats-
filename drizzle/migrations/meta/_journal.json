@@ -36,6 +36,13 @@
       "when": 1792959059322,
       "tag": "0004_add_menu_item_allergens",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1795239534583,
+      "tag": "0005_restrict_quote_settings_to_admins",
+      "breakpoints": true
     }
   ]
 }

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { MapPin, ArrowUpRight } from 'lucide-react';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { supabase } from '@/integrations/supabase/client';
@@ -74,11 +74,11 @@ const Contact = () => {
     setSubmitting(false);
 
     if (error) {
-      toast.error("We couldn't send your message. Please try again or call us.");
+      toast.error("We couldn't submit your message just now. Please try again.");
       return;
     }
 
-    toast.success("Thank you for your message! We'll get back to you soon.");
+    toast.success('Thank you — your message has been received.');
     setFormData({ name: '', email: '', phone: '', message: '' });
   };
 
@@ -120,63 +120,26 @@ const Contact = () => {
                   </p>
                 </div>
 
-                <div className="space-y-6">
-                  <Card className="border-0 shadow-soft">
-                    <CardContent className="p-6">
-                      <div className="flex items-start space-x-4">
-                        <MapPin className="h-6 w-6 text-accent mt-1" />
-                        <div>
-                          <h3 className="font-medium text-primary mb-2">Address</h3>
-                          <p className="text-muted-foreground">
-                            {siteBrand.address[0]}<br />
-                            {siteBrand.address[1]}<br />
-                            United Kingdom
-                          </p>
-                        </div>
+                <Card className="border-0 shadow-soft">
+                  <CardContent className="p-6">
+                    <div className="flex items-start gap-4">
+                      <MapPin className="mt-1 h-6 w-6 text-accent" />
+                      <div>
+                        <h3 className="mb-2 font-medium text-primary">Find us in Oval</h3>
+                        <address className="not-italic text-muted-foreground">
+                          {siteBrand.address[0]}<br />
+                          {siteBrand.address[1]}<br />
+                          United Kingdom
+                        </address>
+                        <Button asChild variant="link" className="mt-3 h-auto px-0 text-primary">
+                          <a href="https://www.google.com/maps/search/?api=1&query=82+Bolton+Crescent+Oval+SE5+0SE" target="_blank" rel="noreferrer">
+                            Get directions <ArrowUpRight className="ml-2 h-4 w-4" />
+                          </a>
+                        </Button>
                       </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="border-0 shadow-soft">
-                    <CardContent className="p-6">
-                      <div className="flex items-start space-x-4">
-                        <Phone className="h-6 w-6 text-accent mt-1" />
-                        <div>
-                          <h3 className="font-medium text-primary mb-2">Phone</h3>
-                          {siteBrand.phone ? <p className="text-muted-foreground">{siteBrand.phone}</p> : <p className="text-muted-foreground">Phone details coming soon</p>}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="border-0 shadow-soft">
-                    <CardContent className="p-6">
-                      <div className="flex items-start space-x-4">
-                        <Mail className="h-6 w-6 text-accent mt-1" />
-                        <div>
-                          <h3 className="font-medium text-primary mb-2">Email</h3>
-                          {siteBrand.email ? <p className="text-muted-foreground">{siteBrand.email}</p> : <p className="text-muted-foreground">Email details coming soon</p>}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {siteBrand.openingHours && <Card className="border-0 shadow-soft">
-                    <CardContent className="p-6">
-                      <div className="flex items-start space-x-4">
-                        <Clock className="h-6 w-6 text-accent mt-1" />
-                        <div>
-                          <h3 className="font-medium text-primary mb-2">Opening Hours</h3>
-                          <div className="text-muted-foreground space-y-1">
-                            <p>Monday - Thursday: 12:00 - 22:00</p>
-                            <p>Friday - Saturday: 12:00 - 23:00</p>
-                            <p>Sunday: 12:00 - 21:00</p>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>}
-                </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
 
               {/* Contact Form */}

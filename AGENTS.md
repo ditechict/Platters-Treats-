@@ -5,3 +5,4 @@
 - Different purchasable serving options use distinct menu records, preserving real menu IDs and authoritative order prices without synthetic basket identifiers.
 - Tasting eligibility is calculated by a shared pure function against the event-only estimate; structured booking selection and notes support admin review independently of human-readable summaries.
 - Public brand identity and verified visit details are centralized in a shared site configuration so page copy cannot drift between the header, footer, and contact views.
+- Public menu highlights use only confirmed café descriptions and omit unverified prices until Zeren's live menu is confirmed, so obsolete catalogue records are not misrepresented.

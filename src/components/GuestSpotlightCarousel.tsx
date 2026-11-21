@@ -41,7 +41,7 @@ export default function GuestSpotlightCarousel() {
                   <p className="text-xs uppercase text-accent mb-2">0{index + 1} / Guest spotlight</p>
                   <h3 className="font-display text-3xl text-primary mb-3">{moment.title}</h3>
                   <p className="text-sm leading-relaxed text-muted-foreground min-h-[5rem]">{moment.caption}</p>
-                  <Button asChild variant="link" className="px-0 text-accent"><Link to="/quote">Book an Event <ArrowUpRight className="h-4 w-4 ml-2" /></Link></Button>
+                  <Button asChild variant="link" className="px-0 text-accent"><Link to="/quote">Catering enquiry <ArrowUpRight className="h-4 w-4 ml-2" /></Link></Button>
                 </div>
               </article>
             ))}

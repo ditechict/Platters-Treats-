@@ -99,7 +99,7 @@ const CartDrawer = () => {
                 <span className="font-display text-2xl text-primary">£{getTotalPrice().toFixed(2)}</span>
               </div>
               <Button asChild className="w-full bg-accent text-accent-foreground hover:bg-accent/90 shadow-gold" onClick={closeCart}>
-                <Link to="/cart">Review Basket &amp; Checkout</Link>
+                <Link to="/cart">Review Basket</Link>
               </Button>
               <Button variant="ghost" className="w-full" onClick={closeCart}>
                 Continue Browsing

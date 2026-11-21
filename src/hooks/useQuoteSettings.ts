@@ -7,17 +7,17 @@ export type QuoteSettings = { eventStyles: EventStyle[]; serviceLevels: ServiceL
 
 export const DEFAULT_QUOTE_SETTINGS: QuoteSettings = {
   eventStyles: [
-    { id: 'canape-reception', label: 'Canapé Reception', perPerson: 18, description: 'Elegant finger food for standing receptions' },
-    { id: 'grazing-platters', label: 'Grazing Platters', perPerson: 14, description: 'Abundant shared platters and boards' },
-    { id: 'afternoon-tea', label: 'Afternoon Tea', perPerson: 22, description: 'Tiered stands, scones and patisserie' },
-    { id: 'full-banquet', label: 'Full Banquet', perPerson: 32, description: 'Multi-course seated dining experience' },
+    { id: 'afro-brunch', label: 'Afro-Brunch Spread', perPerson: 0, description: 'Generous brunch favourites for a shared table' },
+    { id: 'breakfast-brunch', label: 'Breakfast & Brunch', perPerson: 0, description: 'A relaxed morning gathering' },
+    { id: 'brunch-platters', label: 'Brunch Platters', perPerson: 0, description: 'Plates to share around the table' },
+    { id: 'custom', label: 'Something Custom', perPerson: 0, description: 'Tell us what you have in mind' },
   ],
   serviceLevels: [
-    { id: 'delivery-only', label: 'Delivery Only', multiplier: 1, description: 'Beautifully presented, delivered to your door' },
-    { id: 'setup-styling', label: 'Delivery & Styling', multiplier: 1.15, description: 'We deliver and style the display for you' },
-    { id: 'staffed-service', label: 'Fully Staffed', multiplier: 1.35, description: 'Professional staff serve your guests throughout' },
+    { id: 'delivery-only', label: 'Delivery', multiplier: 1, description: 'Food delivered to your venue' },
+    { id: 'setup-styling', label: 'Set-up & Styling', multiplier: 1, description: 'Ask us to arrange the food display' },
+    { id: 'staffed-service', label: 'Staffed Service', multiplier: 1, description: 'Ask about service staff for your event' },
   ],
-  minSpend: 250,
+  minSpend: 0,
 };
 
 export const computeEstimate = (guests: number, perPerson: number, multiplier: number, minSpend: number) =>

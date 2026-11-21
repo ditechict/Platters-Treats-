@@ -189,7 +189,7 @@
   .hero-slide-active {
     z-index: 2;
     opacity: 1;
-    filter: blur(1px);
+    filter: blur(0);
     transform: scale(1.075);
     -webkit-mask-position: 0% 0;
     mask-position: 0% 0;
