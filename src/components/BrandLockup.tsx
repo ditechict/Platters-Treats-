@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import logo from '@/assets/zeren-logo.svg';
+import logo from '@/assets/zeren-logo.png';
 
 interface BrandLockupProps {
   variant?: 'header' | 'footer';
@@ -14,8 +14,8 @@ const BrandLockup = ({ variant = 'header' }: BrandLockupProps) => {
       aria-label="Zeren Café and Catering home"
       className={isFooter ? 'inline-flex items-center gap-3' : 'inline-flex min-w-0 items-center gap-2'}
     >
-      <span className={`flex shrink-0 items-center justify-center text-primary ${isFooter ? 'h-11 w-11' : 'h-10 w-10'}`}>
-        <img src={logo} alt="" aria-hidden="true" width={64} height={64} className="h-full w-full object-contain" />
+      <span className={`flex shrink-0 items-center justify-center rounded-sm bg-primary-foreground p-1 text-primary ${isFooter ? 'h-11 w-11' : 'h-10 w-10'}`}>
+        <img src={logo} alt="" aria-hidden="true" width={512} height={512} className="h-full w-full object-contain" />
       </span>
       <span className="min-w-0">
         <span className={`block font-display font-medium leading-none heading-elegant ${isFooter ? 'text-2xl text-primary-foreground' : 'text-2xl text-current'}`}>

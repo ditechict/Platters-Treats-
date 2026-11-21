@@ -128,7 +128,7 @@ const Header = () => {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={isMenuOpen}
-              className={cn('p-2', transparent ? 'text-white' : 'text-primary')}
+              className={cn('p-2', transparent ? 'text-primary-foreground' : 'text-primary')}
             >
               {isMenuOpen ? <X className="h-6 w-6" strokeWidth={1.5} /> : <Menu className="h-6 w-6" strokeWidth={1.5} />}
             </button>
@@ -156,10 +156,10 @@ const Header = () => {
           </nav>
           <div className="mt-auto px-8 pb-10">
             <Link
-              to="/contact"
+              to="/quote"
               className="block text-center text-sm font-light tracking-[0.2em] uppercase border border-primary/30 text-primary px-6 py-3.5 hover:bg-primary hover:text-primary-foreground transition-smooth"
             >
-              Plan Catering
+              Catering Enquiry
             </Link>
           </div>
         </div>

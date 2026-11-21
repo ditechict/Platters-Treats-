@@ -1,27 +1,17 @@
-# Canapés & Treats Pretty Platters — Rebuild Roadmap
+# Zeren café and catering refresh
 
-Approved plan: `.lovable/plan/` (agency-grade rebuild). Work in this order.
+Approved plan: `.lovable/plan/zeren-café-catering-website-refresh-2026-11-20.md`.
 
 ## Tasks
 
-- [x] Guest rollout: upload supplied cropped photos and add Guest Moments gallery collection
-- [x] Guest rollout: homepage touch/drag editorial carousel between About and Featured Menu
-- [x] Guest rollout: tasting pricing, booking selection/notes, admin indicator and rule tests
-- [x] Guest rollout: featured brunch, skillet and cooler glass/carafe menu items
-- [x] Guest rollout: verify gallery, carousel, basket and persisted tasting booking
-- [ ] Guest rollout: verify tasting badge in signed-in admin view — blocked: no auth users exist; an administrator must sign up and receive admin access
+- [x] Confirm Zeren identity, café + catering scope, and verified Oval address
+- [x] Add shared brand configuration, logo, favicon, and supplied brunch photo
+- [ ] Rebrand navigation, home, menu, gallery, contact, and footer; remove legacy claims and contact details
+- [ ] Preserve catering enquiries while withholding unconfirmed prices and tasting terms
+- [ ] Replace unrelated old menu items with confirmed café categories and items; wait for user menu/prices
+- [ ] Verify desktop/mobile pages, navigation, basket, forms, and public copy
 
-- [ ] 1. Design system + layout shell — brand tokens (ink/ivory/champagne gold), Cormorant Garamond display + Jost body, scroll-aware header, basket drawer, footer, section kit, reveal-on-scroll motion
-- [ ] 2. Database schema, roles, storage, auth (menu items, categories, gallery, orders, enquiries, bookings, profiles, user_roles — all with RLS)
-- [ ] 3. Rebuild pages against real data: Home (story-led), Our Story, Events, Menu, Gallery, Contact
-- [ ] 4. Basket persistence, checkout with card payment, order confirmation, account area
-- [ ] 5. Admin dashboard (menu, gallery, orders, enquiries, bookings)
-- [x] Quote pricing editable in admin
-- [ ] Customer quote confirmation email — blocked: needs a verified email domain
-- [ ] 6. SEO pass (per-page meta, JSON-LD, sitemap), performance pass, full click-through test
+## Blockers
 
-## Notes
-
-- Email address: domain not registered yet — route contact form to a working inbox the user nominates; keep branded address out of footer until then.
-- Payment: Lovable built-in payments, test mode first; needs Pro plan (fallback: confirmed order + invoice request, no rework).
-- Real address, phone, hours, awards stay as-is.
+- Named Zeren storefront and original video files are not attached.
+- Zeren menu prices are awaiting the user's decision; current quote settings belong to the previous brand.

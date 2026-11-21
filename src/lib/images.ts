@@ -54,11 +54,11 @@ const bundled: Record<string, string> = {
 };
 
 export const GUEST_MOMENTS = [
-  { key: 'botanical-cooler', title: 'Signature Sip', src: coolerWeb.url, fullSrc: coolerOriginal.url, alt: 'Guest raising a vibrant green layered botanical cooler seated before a breakfast platter at Canapés & Treats.', caption: 'Signature crafted coolers—custom beverage pairings to accompany your event menu.' },
-  { key: 'gouda-skillet', title: 'Hearty Flavours', src: skilletWeb.url, fullSrc: skilletOriginal.url, alt: 'Guest enjoying a piping hot skillet of gourmet sausage, pasta, and melted cheese seasoned with fresh herbs.', caption: 'Hearty, comforting flavours that prove luxury presentation never sacrifices portion or depth.' },
-  { key: 'breakfast-spread', title: 'Breakfast & Brunch', src: breakfastWeb.url, fullSrc: breakfastOriginal.url, alt: 'Overhead view of an artisanal British breakfast platter with grilled sourdough, Cumberland sausage, baked beans, and sautéed mushrooms.', caption: 'Morning gatherings elevated: substantial brunch platters designed for executive breakfasts and launch events.' },
-  { key: 'table-atmosphere', title: 'The Atmosphere', src: atmosphereWeb.url, fullSrc: atmosphereOriginal.url, alt: 'Family and friends gathered around a generous breakfast table enjoying platters together.', caption: 'Unforgettable celebrations: hospitality built around warmth, abundance, and shared plates.' },
-  { key: 'golden-toast', title: 'Golden Details', src: toastWeb.url, fullSrc: toastOriginal.url, alt: 'Close-up of golden toasted brioche held above an artisanal morning breakfast plate.', caption: 'Every element prepared to order with obsessive attention to taste and texture.' },
+  { key: 'botanical-cooler', title: 'A Fresh Pour', src: coolerWeb.url, fullSrc: coolerOriginal.url, alt: 'A guest raises a vivid green drink beside brunch at Zeren.', caption: 'A bright sip beside a generous brunch spread.' },
+  { key: 'gouda-skillet', title: 'Hearty Flavours', src: skilletWeb.url, fullSrc: skilletOriginal.url, alt: 'A guest enjoys a hot skillet with melted cheese and fresh herbs at Zeren.', caption: 'Comforting plates made for sharing and lingering.' },
+  { key: 'breakfast-spread', title: 'Breakfast & Brunch', src: breakfastWeb.url, fullSrc: breakfastOriginal.url, alt: 'A generous breakfast plate with toast, eggs, beans, sausage and sides at Zeren.', caption: 'A full table and a relaxed start to the day.' },
+  { key: 'table-atmosphere', title: 'Around the Table', src: atmosphereWeb.url, fullSrc: atmosphereOriginal.url, alt: 'Family and friends share brunch together at Zeren.', caption: 'Warm welcomes, generous plates and good company.' },
+  { key: 'golden-toast', title: 'Golden Details', src: toastWeb.url, fullSrc: toastOriginal.url, alt: 'Golden toast held above a brunch plate at Zeren.', caption: 'Golden, crisp details on a colourful brunch plate.' },
 ];
 
 export const guestMomentForRef = (ref: string) =>

@@ -39,7 +39,7 @@ const CartDrawer = () => {
           <div className="flex-1 flex flex-col items-center justify-center gap-4 px-8 text-center">
             <ShoppingBag className="h-12 w-12 text-muted-foreground" />
             <p className="text-muted-foreground font-light">
-              Your basket is empty — discover our canapés and platters.
+              Your basket is empty — explore Zeren’s café menu.
             </p>
             <Button asChild onClick={closeCart} className="bg-accent text-accent-foreground hover:bg-accent/90">
               <Link to="/menu">Browse the Menu</Link>

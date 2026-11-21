@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import heroImage from '@/assets/hero-canapes.jpg';
-import breakfastHero from '@/assets/breakfast-platter-hero.jpeg.asset.json';
+import brunchPhoto from '@/assets/zeren-brunch-spread.jpeg.asset.json';
+import breakfastWeb from '@/assets/guest-spotlight-breakfast-spread.webp.asset.json';
 
 const slides = [
   {
-    src: breakfastHero.url,
-    alt: 'An abundant breakfast platter with pastries, fruit and savoury dishes',
+    src: brunchPhoto.url,
+    alt: 'A generous brunch table with eggs, toast, beans, fruit and colourful drinks at Zeren',
     position: 'object-[center_58%] md:object-center',
   },
   {
-    src: heroImage,
-    alt: 'Elegant canapés and artful platters',
+    src: breakfastWeb.url,
+    alt: 'A guest enjoying a full breakfast plate at Zeren',
     position: 'object-center',
   },
 ];
@@ -48,7 +49,6 @@ const Hero = () => {
         if (!event.currentTarget.contains(event.relatedTarget)) setIsPaused(false);
       }}
     >
-      {/* Background Image */}
       <div className="absolute inset-0 z-0">
         {slides.map((slide, index) => (
           <img
@@ -66,32 +66,23 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
-        <div className="flex items-center justify-center space-x-1 mb-6">
-          {[...Array(5)].map((_, i) => (
-            <Star key={i} className="h-5 w-5 fill-accent text-accent" />
-          ))}
-          <span className="ml-2 text-sm font-light tracking-wide opacity-90">
-            Award-Winning Cuisine
-          </span>
-        </div>
-
-        <h1 className="text-5xl md:text-7xl font-elegant font-light mb-6 heading-elegant">
-          Canapés & Treats
-          <span className="block text-3xl md:text-4xl text-accent font-normal mt-2">
-            Pretty Platters
+      <div className="relative z-10 text-center text-primary-foreground px-4 max-w-4xl mx-auto">
+        <p className="eyebrow justify-center mb-6">Oval · South London</p>
+        <h1 className="text-6xl md:text-8xl font-display font-light mb-6 heading-elegant">
+          Zeren
+          <span className="block text-3xl md:text-4xl text-accent font-normal mt-3">
+            Café &amp; Catering
           </span>
         </h1>
 
         <p className="text-xl md:text-2xl font-light mb-8 max-w-2xl mx-auto leading-relaxed opacity-95">
-          Sophisticated canapés, elegant platters, and curated global treats. 
-          Modern UK hospitality with international flair.
+          Afro-inspired brunch, generous plates and good company — with catering for your gatherings.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
           <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-gold font-medium px-8 py-3">
             <Link to="/menu">
-              View Our Menu
+              Explore the Menu
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
@@ -101,24 +92,13 @@ const Hero = () => {
             size="lg" 
             className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 shadow-elegant font-medium px-8 py-3"
           >
-            <Link to="/contact">Reserve a Table</Link>
+            <Link to="/contact">Plan Your Visit</Link>
           </Button>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto">
-          <div className="text-center">
-            <div className="text-2xl font-light text-accent">50+</div>
-            <div className="text-sm font-light opacity-80">Signature Canapés</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-light text-accent">15+</div>
-            <div className="text-sm font-light opacity-80">Years Experience</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-light text-accent">5★</div>
-            <div className="text-sm font-light opacity-80">Customer Rating</div>
-          </div>
-        </div>
+        <Button asChild variant="link" className="mt-5 text-primary-foreground/85 hover:text-accent">
+          <Link to="/quote">Catering enquiries <ArrowRight className="ml-2 h-4 w-4" /></Link>
+        </Button>
       </div>
 
       <div className="absolute inset-x-4 top-1/2 z-20 flex -translate-y-1/2 justify-between md:inset-x-8">
@@ -167,7 +147,7 @@ const Hero = () => {
 
       {/* Scroll indicator — restrained pulse, no bounce */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10" aria-hidden="true">
-        <div className="w-px h-12 bg-white/30 overflow-hidden">
+        <div className="w-px h-12 bg-primary-foreground/30 overflow-hidden">
           <div className="w-full h-1/2 bg-accent animate-pulse" />
         </div>
       </div>
