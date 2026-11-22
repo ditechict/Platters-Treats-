@@ -10,6 +10,7 @@ Approved plan: `.lovable/plan/zeren-café-catering-website-refresh-2026-11-20.md
 - [ ] Preserve catering enquiries while withholding unconfirmed prices and tasting terms
 - [x] Replace unrelated old menu items with confirmed café categories and visible dish names only; hide unconfirmed prices
 - [ ] Verify desktop/mobile pages, navigation, basket, forms, and public copy
+- [ ] Check remaining credits, complete verification, summarize outstanding items, and commit the finished work
 
 ## Blockers
 

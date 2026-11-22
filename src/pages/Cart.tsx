@@ -33,7 +33,7 @@ const Cart = () => {
               <CardContent className="p-12">
                 <ShoppingBag className="h-16 w-16 text-muted-foreground mx-auto mb-6" />
                 <h2 className="text-2xl font-elegant font-light mb-4 text-primary">
-                  Your Cart is Empty
+                  Your Basket is Empty
                 </h2>
                 <p className="text-muted-foreground mb-8">
                   Browse Zeren’s café menu and brunch highlights.
@@ -57,7 +57,7 @@ const Cart = () => {
         <div className="py-16 bg-primary text-primary-foreground">
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-4xl md:text-6xl font-elegant font-light mb-4 heading-elegant">
-              Your Cart
+              Your Basket
             </h1>
             <p className="text-xl md:text-2xl font-light opacity-90">
               Review your saved selection. Online payment is not currently available.
@@ -170,7 +170,9 @@ const Cart = () => {
                     
                     <div className="space-y-3">
                       <Button asChild className="w-full bg-accent text-accent-foreground hover:bg-accent/90 shadow-gold">
-                        <Link to="/contact">Contact Zeren about this selection</Link>
+                        <Link to={`/contact?basket=${encodeURIComponent(cartItems.map((item) => `${item.quantity} × ${item.name}`).join('; ').slice(0, 700))}`}>
+                          Ask about availability
+                        </Link>
                       </Button>
                       
                       <Button asChild variant="outline" className="w-full">

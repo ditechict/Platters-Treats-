@@ -11,20 +11,20 @@ const highlights = [
   },
   {
     number: '02',
-    category: 'French Toast',
-    name: 'Golden brunch stacks',
-    description: 'French toast served with runny egg and bacon.',
+    category: 'Pancakes & French Toast',
+    name: 'Pancakes & French Toast',
+    description: 'Golden French toast stacks served with runny egg and bacon.',
   },
   {
     number: '03',
-    category: 'Full Brunch',
-    name: 'A classic full plate',
-    description: 'A generous brunch plate for a slow start to the day.',
+    category: 'Full English & Brunch',
+    name: 'Full English',
+    description: 'A full brunch plate with classic breakfast favourites.',
   },
   {
     number: '04',
-    category: 'Drinks & Pancakes',
-    name: 'Something to sip or share',
+    category: 'Café Drinks',
+    name: 'Matcha, Mocktails & Coffee',
     description: 'Pancakes, matchas, mocktails and coffee.',
   },
 ];
@@ -38,13 +38,13 @@ const MenuSection = () => (
         lede="Afro-inspired brunch, golden stacks and refreshing drinks in Oval."
       />
 
-      <div className="grid grid-cols-1 gap-x-12 lg:grid-cols-2">
+      <div className="grid grid-cols-2 gap-x-4 md:gap-x-12 lg:grid-cols-2">
         {highlights.map((item) => (
-          <article key={item.number} className="grid grid-cols-[2.5rem_1fr] gap-4 border-t border-border py-6">
+          <article key={item.number} className="grid grid-cols-[1.25rem_1fr] gap-2 border-t border-border py-6 md:grid-cols-[2.5rem_1fr] md:gap-4">
             <span className="pt-1 text-xs text-accent">{item.number}</span>
             <div>
               <p className="mb-2 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">{item.category}</p>
-              <h3 className="font-display text-2xl font-medium text-primary">{item.name}</h3>
+              <h3 className="font-display text-xl font-medium text-primary md:text-2xl">{item.name}</h3>
               <p className="mt-2 max-w-prose text-sm leading-relaxed text-muted-foreground">{item.description}</p>
             </div>
           </article>

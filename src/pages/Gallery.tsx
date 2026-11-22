@@ -64,7 +64,7 @@ const Gallery = () => {
               </p>
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 lg:gap-8">
               {isLoading &&
                 Array.from({ length: 6 }).map((_, i) => (
                   <Skeleton key={i} className="aspect-square w-full rounded-lg" />
@@ -91,9 +91,9 @@ const Gallery = () => {
                           className="w-full h-full object-cover transition-smooth hover:scale-105"
                         />
                       </Button>
-                      <div className="p-6">
-                        <h2 className="text-lg font-medium text-primary mb-1">{image.title}</h2>
-                        <p className="text-sm text-muted-foreground">{image.category}</p>
+                      <div className="p-3 md:p-6">
+                        <h2 className="text-sm font-medium text-primary mb-1 md:text-lg">{image.title}</h2>
+                        <p className="text-xs text-muted-foreground md:text-sm">{image.category}</p>
                       </div>
                     </CardContent>
                   </Card>

@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { MapPin, ArrowUpRight } from 'lucide-react';
 import { toast } from 'sonner';
 import { z } from 'zod';
+import { useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import Footer from '@/components/Footer';
 import { siteBrand } from '@/lib/siteBrand';
@@ -35,11 +36,13 @@ const contactSchema = z.object({
 });
 
 const Contact = () => {
+  const [searchParams] = useSearchParams();
+  const basketNote = searchParams.get('basket')?.slice(0, 700) ?? '';
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    message: ''
+    message: basketNote ? `Basket enquiry: ${basketNote}` : '',
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -233,7 +236,7 @@ const Contact = () => {
                           value={formData.message}
                           onChange={handleChange}
                           className={`transition-smooth focus:shadow-gold ${errors.message ? 'border-destructive' : ''}`}
-                          placeholder="Tell us about your event or dining preferences..."
+                          placeholder="Tell us about your visit, menu enquiry or catering plans..."
                           maxLength={1000}
                           aria-invalid={!!errors.message}
                           aria-describedby={errors.message ? 'message-error' : undefined}
