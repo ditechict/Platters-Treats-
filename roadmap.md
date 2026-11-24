@@ -19,6 +19,15 @@ Approved plan: `.lovable/plan/zeren-café-catering-website-refresh-2026-11-20.md
 - [x] Add per-item price fields without publishing unapproved prices
 - [x] Run filter tests and verify the interactive menu on desktop and mobile
 
+## Vercel deployment preflight — 24 November 2026
+
+- [x] Add SPA rewrites to `/index.html` for Vercel hosting
+- [x] Run regression tests and check public route refreshes (23 tests passed; menu, gallery, contact, quote return 200 after refresh without runtime errors)
+- [x] Confirm a successful preview build and record deployment limitations (preview build OK)
+- [ ] Verify media delivery and sign-in redirects on the Vercel deployment (requires a Vercel deployment URL)
+
+Deployment limitations: relative `/__l5e/assets-v1/` media depend on Lovable hosting and need a verified delivery solution on Vercel; the local catering preview shows a missing managed photo. Configure the existing public Vite environment variables in Vercel and authorize its sign-in callback origin before deployment acceptance. No Vercel deployment was performed.
+
 ## Blockers
 
 - Named Zeren storefront and original video files are not attached.
