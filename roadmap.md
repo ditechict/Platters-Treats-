@@ -12,6 +12,13 @@ Approved plan: `.lovable/plan/zeren-café-catering-website-refresh-2026-11-20.md
 - [ ] Verify desktop/mobile pages, navigation, basket, forms, and public copy
 - [ ] Check remaining credits, complete verification, summarize outstanding items, and commit the finished work
 
+## Interactive menu — 24 November 2026
+
+- [x] Add full confirmed café categories and ingredient details to `/menu`
+- [x] Add category navigation, dietary filters, allergen exclusions, and empty states
+- [x] Add per-item price fields without publishing unapproved prices
+- [x] Run filter tests and verify the interactive menu on desktop and mobile
+
 ## Blockers
 
 - Named Zeren storefront and original video files are not attached.

@@ -1,6 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import MenuSection from '@/components/MenuSection';
+import InteractiveMenu from '@/components/InteractiveMenu';
 import { useEffect } from 'react';
 
 const Menu = () => {
@@ -22,7 +22,7 @@ const Menu = () => {
             </p>
           </div>
         </div>
-        <MenuSection />
+        <InteractiveMenu />
       </main>
       <Footer />
     </div>

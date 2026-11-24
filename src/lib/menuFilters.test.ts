@@ -2,9 +2,11 @@ import { describe, expect, it } from 'vitest';
 import {
   DIETARY_FILTERS,
   avoidsSelectedAllergens,
+  filterMenuItems,
   labelForAllergen,
   labelForDietary,
   matchesDietaryFilter,
+  matchesDietaryFilters,
   presentAllergens,
 } from './menuFilters';
 
@@ -40,6 +42,34 @@ describe('menu allergen filters', () => {
   it('keeps items free of the selected allergens', () => {
     expect(avoidsSelectedAllergens(['eggs', 'mustard'], ['milk'])).toBe(true);
     expect(avoidsSelectedAllergens([], ['milk', 'eggs'])).toBe(true);
+  });
+
+  it('does not treat missing allergen information as allergen-free', () => {
+    expect(avoidsSelectedAllergens(null, ['eggs'])).toBe(false);
+    expect(avoidsSelectedAllergens(undefined, ['milk'])).toBe(false);
+  });
+
+  it('keeps items with unknown allergens when no exclusion is selected', () => {
+    expect(avoidsSelectedAllergens(null, [])).toBe(true);
+  });
+});
+
+describe('combined menu filters', () => {
+  it('requires every selected dietary filter to match', () => {
+    expect(matchesDietaryFilters(['vegan', 'gluten-free'], [vegan, glutenFree])).toBe(true);
+    expect(matchesDietaryFilters(['vegan'], [vegan, glutenFree])).toBe(false);
+  });
+
+  it('combines category, dietary, and allergen rules', () => {
+    const items = [
+      { id: 'brunch', category: 'brunch', dietaryTags: ['vegetarian'], allergens: ['eggs'] },
+      { id: 'drink', category: 'drinks', dietaryTags: ['vegan'], allergens: [] },
+      { id: 'unknown', category: 'drinks', dietaryTags: ['vegan'], allergens: null },
+    ];
+
+    expect(filterMenuItems(items, { category: 'drinks' }).map((item) => item.id)).toEqual(['drink', 'unknown']);
+    expect(filterMenuItems(items, { category: 'drinks', dietaryFilters: [vegan] }).map((item) => item.id)).toEqual(['drink', 'unknown']);
+    expect(filterMenuItems(items, { category: 'drinks', avoidAllergens: ['milk'] }).map((item) => item.id)).toEqual(['drink']);
   });
 });
 

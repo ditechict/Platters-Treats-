@@ -49,8 +49,42 @@ export const matchesDietaryFilter = (
   filter: DietaryFilter
 ) => filter.tags.some((tag) => dietaryTags.includes(tag));
 
-export const avoidsSelectedAllergens = (allergens: string[], avoid: string[]) =>
-  !allergens.some((a) => avoid.includes(a));
+export const avoidsSelectedAllergens = (
+  allergens: string[] | null | undefined,
+  avoid: string[],
+) => {
+  if (avoid.length === 0) return true;
+  // Unknown allergen information is never treated as allergen-free.
+  if (!allergens) return false;
+  return !allergens.some((allergen) => avoid.includes(allergen));
+};
+
+export const matchesDietaryFilters = (
+  dietaryTags: string[],
+  filters: DietaryFilter[],
+) => filters.every((filter) => matchesDietaryFilter(dietaryTags, filter));
+
+export interface FilterableMenuItem {
+  category: string;
+  dietaryTags: string[];
+  allergens: string[] | null;
+}
+
+export interface MenuFilterSelection {
+  category?: string;
+  dietaryFilters?: DietaryFilter[];
+  avoidAllergens?: string[];
+}
+
+export const filterMenuItems = <T extends FilterableMenuItem>(
+  items: T[],
+  selection: MenuFilterSelection,
+) => items.filter((item) => {
+  const categoryMatches = !selection.category || selection.category === 'all' || item.category === selection.category;
+  return categoryMatches
+    && matchesDietaryFilters(item.dietaryTags, selection.dietaryFilters ?? [])
+    && avoidsSelectedAllergens(item.allergens, selection.avoidAllergens ?? []);
+});
 
 export const presentAllergens = (items: { allergens?: string[] | null }[]) => {
   const present = new Set<string>();
