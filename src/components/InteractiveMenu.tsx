@@ -36,6 +36,18 @@ const InteractiveMenu = () => {
     [selectedCategory, dietaryFilters, avoidedAllergens],
   );
 
+  const dietaryMatchCounts = useMemo(
+    () => Object.fromEntries(DIETARY_FILTERS.map((filter) => [
+      filter.key,
+      filterMenuItems(CAFE_MENU, {
+        category: selectedCategory,
+        dietaryFilters: [...dietaryFilters.filter((active) => active.key !== filter.key), filter],
+        avoidAllergens: avoidedAllergens,
+      }).length,
+    ])),
+    [selectedCategory, dietaryFilters, avoidedAllergens],
+  );
+
   const hasFilters = selectedCategory !== 'all' || selectedDietary.length > 0 || avoidedAllergens.length > 0;
 
   const clearFilters = () => {

@@ -38,7 +38,7 @@ const MenuSection = () => (
         lede="Afro-inspired brunch, golden stacks and refreshing drinks in Oval."
       />
 
-      <div className="grid grid-cols-2 gap-x-4 md:gap-x-12 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-x-4 md:grid-cols-2 md:gap-x-12">
         {highlights.map((item) => (
           <article key={item.number} className="grid grid-cols-[1.25rem_1fr] gap-2 border-t border-border py-6 md:grid-cols-[2.5rem_1fr] md:gap-4">
             <span className="pt-1 text-xs text-accent">{item.number}</span>

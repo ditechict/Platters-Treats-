@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import brunchPhoto from '@/assets/zeren-brunch-spread.jpeg.asset.json';
 import breakfastWeb from '@/assets/guest-spotlight-breakfast-spread.webp.asset.json';
+import { managedAssetUrl } from '@/lib/assets';
 
 const slides = [
   {
-    src: brunchPhoto.url,
+    src: managedAssetUrl(brunchPhoto.url),
     alt: 'A generous brunch table with eggs, toast, beans, fruit and colourful drinks at Zeren',
     position: 'object-[center_58%] md:object-center',
   },
