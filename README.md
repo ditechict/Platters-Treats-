@@ -73,11 +73,23 @@ Continue developing this project in the [Lovable editor](https://lovable.dev/pro
 
 ## Development
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+Use [Bun](https://bun.sh/docs/installation) at the version in `package.json`. The repository uses `bun.lock` for dependency resolution.
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
+git clone https://github.com/ditechict/Platters-Treats-.git
+cd Platters-Treats-
+bun install --frozen-lockfile
+bun run dev
 ```
+
+## Continuous integration
+
+GitHub Actions checks pull requests and pushes to `main` with the same frozen install and these commands.
+
+```sh
+bun run typecheck
+bun run test
+bun run build
+```
+
+CI builds with placeholder Supabase configuration. For an isolated preview, set `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` to that preview's own backend before building.
