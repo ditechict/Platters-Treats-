@@ -71,13 +71,16 @@ export const BUNDLED_IMAGE_KEYS = Object.keys(bundled);
  * Supports "asset:<file>" (shipped photography), absolute URLs,
  * and storage paths inside the private site-images bucket.
  */
+// Short-lived links so withdrawn access stops working quickly.
+const SIGNED_IMAGE_TTL_SECONDS = 120;
+
 export async function resolveImage(ref?: string | null): Promise<string> {
   if (!ref) return heroCanapes;
   if (ref.startsWith("asset:")) return bundled[ref.slice(6)] ?? heroCanapes;
    if (ref.startsWith("http") || ref.startsWith('/__l5e/assets-v1/')) return ref;
   const { data } = await supabase.storage
     .from("site-images")
-    .createSignedUrl(ref, 60 * 60);
+    .createSignedUrl(ref, SIGNED_IMAGE_TTL_SECONDS);
   return data?.signedUrl ?? heroCanapes;
 }
 
